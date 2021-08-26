@@ -26,7 +26,7 @@ public class ProdutoController {
 
     @PostMapping
     @ApiOperation(value = "Retorna produtos de acordo com o filtro.")
-    public ResponseEntity<Page<Produto>> obterProdutos(@PageableDefault(page = 0, size = 20, sort = "idProduto", direction = Sort.Direction.DESC)Pageable pageable,
+    public ResponseEntity<Page<Produto>> obterProdutos(@PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
                                                        @RequestBody(required = false) FiltroListarProdutos filtros){
         return ResponseEntity.ok(produtoService.obterProdutos(pageable, filtros));
     }

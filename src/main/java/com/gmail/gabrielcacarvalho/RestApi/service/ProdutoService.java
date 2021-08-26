@@ -27,7 +27,7 @@ public class ProdutoService {
         return (root, query, builder)->{
             List<Predicate> predicates = new ArrayList<>();
 
-            //if ()
+
 
             return builder.and(predicates.toArray(new Predicate[0]));
         };

@@ -23,7 +23,7 @@ public class PromocaoController {
 
     @PostMapping
     @ApiOperation(value = "Retorna promoções de acordo com o filtro. Date pattern = yyyy-MM-dd")
-    public ResponseEntity<Page<Promocao>> obterPromocoes(@PageableDefault(page = 0, size = 1, sort = "idPromocao", direction = Sort.Direction.DESC) Pageable pageable,
+    public ResponseEntity<Page<Promocao>> obterPromocoes(@PageableDefault(page = 0, size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                                          @RequestBody(required = false) FiltroListarPromocoes filtros){
         return ResponseEntity.ok(promocaoService.obterPromocoes(pageable, filtros));
     }
