@@ -1,7 +1,7 @@
 package com.gmail.gabrielcacarvalho.RestApi.dto.produto;
 
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.enumerator.Tamanho;
-import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Categoria;
+import com.gmail.gabrielcacarvalho.RestApi.core.entity.enumerator.Categoria;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Marca;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Promocao;
 import lombok.Data;
@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 public class FiltroListarProdutos {
 
     //private TipoVestimenta tipo;
-    //TODO: Talvez mudar pra enum MASCULINO,FEMININO,INFANTIL
     private Categoria categoria;
     private Marca marca;
     private Promocao promocao;

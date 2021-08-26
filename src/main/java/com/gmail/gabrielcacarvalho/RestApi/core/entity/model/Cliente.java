@@ -12,7 +12,7 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idCliente;
+    private Integer id;
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
     private String nome;

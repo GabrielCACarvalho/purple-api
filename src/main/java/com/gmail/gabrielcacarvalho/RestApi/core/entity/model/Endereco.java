@@ -10,7 +10,7 @@ public class Endereco {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idEndereco;
+    private Integer id;
     private String estado;
     private String cidade;
     private String bairro;

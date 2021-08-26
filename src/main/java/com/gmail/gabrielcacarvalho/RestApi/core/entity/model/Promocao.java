@@ -12,7 +12,7 @@ public class Promocao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idPromocao;
+    private Integer id;
     private String descricao;
     @Temporal(TemporalType.DATE)
     private Date dataInicio;

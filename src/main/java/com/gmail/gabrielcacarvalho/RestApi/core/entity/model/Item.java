@@ -12,7 +12,7 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idItem;
+    private Integer id;
     @OneToMany
     private List<Produto> produto;
     private Integer quantidade;

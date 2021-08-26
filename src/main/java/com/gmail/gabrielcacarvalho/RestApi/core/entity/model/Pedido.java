@@ -14,7 +14,7 @@ public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idPedido;
+    private Integer id;
     private StatusPedido status;
     @ManyToOne
     private Cliente cliente;

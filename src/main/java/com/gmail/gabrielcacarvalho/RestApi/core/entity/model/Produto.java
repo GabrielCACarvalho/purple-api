@@ -1,5 +1,6 @@
 package com.gmail.gabrielcacarvalho.RestApi.core.entity.model;
 
+import com.gmail.gabrielcacarvalho.RestApi.core.entity.enumerator.Categoria;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,12 +12,12 @@ public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idProduto;
+    private Integer id;
     private String nome;
     private String descricao;
     @ManyToOne
     private Marca marca;
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
     private Categoria categoria;
     private BigDecimal valorUnitario;
     private String cor;
