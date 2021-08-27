@@ -23,4 +23,6 @@ public class Produto {
     private String cor;
     @ManyToOne
     private Promocao promocao;
+    @ManyToOne
+    private TipoVestimenta tipoVestimenta;
 }
