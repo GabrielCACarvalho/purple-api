@@ -42,7 +42,7 @@ public class EstoqueService {
         if (estoque == null)
             throw new RuntimeException("ESSE PRODUTO NAO TEM ESTOQUE"); //TODO: Fazer validação com java validation
 
-        estoque.setQuantidadeEmEstoque(estoque.getQuantidadeEmEstoque() - 1);
+        estoque.setQuantidadeEmEstoque(estoque.getQuantidadeEmEstoque() - saidaEstoque.getQuantidade());
 
         estoqueRepository.save(estoque);
 
