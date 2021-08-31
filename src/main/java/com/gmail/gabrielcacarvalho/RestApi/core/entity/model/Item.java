@@ -1,5 +1,6 @@
 package com.gmail.gabrielcacarvalho.RestApi.core.entity.model;
 
+import com.gmail.gabrielcacarvalho.RestApi.core.entity.enumerator.Tamanho;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,8 +14,9 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @OneToMany
-    private List<Produto> produto;
+    @ManyToOne
+    private Produto produto;
     private Integer quantidade;
+    private Tamanho tamanho;
     private BigDecimal valorTotal;
 }
