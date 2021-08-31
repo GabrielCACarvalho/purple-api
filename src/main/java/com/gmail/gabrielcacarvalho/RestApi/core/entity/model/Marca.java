@@ -6,10 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
 @Data
-public class Marca {
+public class Marca implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

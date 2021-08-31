@@ -1,14 +1,17 @@
 package com.gmail.gabrielcacarvalho.RestApi.core.entity.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.enumerator.Categoria;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Data
-public class Produto {
+public class Produto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

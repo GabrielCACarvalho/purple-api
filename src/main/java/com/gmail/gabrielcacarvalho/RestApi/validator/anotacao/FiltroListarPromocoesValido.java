@@ -1,4 +1,6 @@
-package com.gmail.gabrielcacarvalho.RestApi.dto.promocao;
+package com.gmail.gabrielcacarvalho.RestApi.validator.anotacao;
+
+import com.gmail.gabrielcacarvalho.RestApi.validator.constraint.FiltroListarPromocoesConstraint;
 
 import javax.validation.Constraint;
 import java.lang.annotation.ElementType;
