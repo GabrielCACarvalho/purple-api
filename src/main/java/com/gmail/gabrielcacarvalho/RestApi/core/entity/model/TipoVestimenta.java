@@ -16,4 +16,11 @@ public class TipoVestimenta implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+
+    public TipoVestimenta() {
+    }
+
+    public TipoVestimenta(Integer id) {
+        this.id = id;
+    }
 }

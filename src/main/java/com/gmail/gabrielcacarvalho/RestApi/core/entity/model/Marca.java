@@ -16,4 +16,11 @@ public class Marca implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+
+    public Marca() {
+    }
+
+    public Marca(Integer id) {
+        this.id = id;
+    }
 }

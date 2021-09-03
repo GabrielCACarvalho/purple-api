@@ -20,4 +20,11 @@ public class Promocao implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dataFim;
     private BigDecimal porcentagemDesconto;
+
+    public Promocao() {
+    }
+
+    public Promocao(Integer id) {
+        this.id = id;
+    }
 }

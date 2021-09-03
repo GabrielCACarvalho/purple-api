@@ -1,7 +1,10 @@
 package com.gmail.gabrielcacarvalho.RestApi.service;
 
+import com.gmail.gabrielcacarvalho.RestApi.converter.Converter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.estoque.EstoqueDTOConverter;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Estoque;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.EstoquePK;
+import com.gmail.gabrielcacarvalho.RestApi.dto.estoque.EstoqueDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.estoque.FiltroConsultaEstoque;
 import com.gmail.gabrielcacarvalho.RestApi.dto.estoque.SaidaEstoque;
 import com.gmail.gabrielcacarvalho.RestApi.dto.produto.EntradaEstoque;
@@ -21,22 +24,24 @@ public class EstoqueService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public Estoque consultaEstoqueProduto(FiltroConsultaEstoque filtroConsultaEstoque) {
+    private Converter<Estoque, EstoqueDTO> estoqueDTOConverter = new EstoqueDTOConverter();
 
-        return Optional.ofNullable(estoqueRepository
+    public EstoqueDTO consultaEstoqueProduto(FiltroConsultaEstoque filtroConsultaEstoque) {
+
+        return estoqueDTOConverter.from(Optional.ofNullable(estoqueRepository
                 .getByIdProdutoIdAndIdTamanho(filtroConsultaEstoque.getIdProduto(),
-                    filtroConsultaEstoque.getTamanho())).orElse(new Estoque());
+                        filtroConsultaEstoque.getTamanho())).orElse(new Estoque()));
     }
 
-    public Estoque entradaNoEstoque(EntradaEstoque entradaEstoque){
+    public EstoqueDTO entradaNoEstoque(EntradaEstoque entradaEstoque){
         Estoque estoque = obtemEstoqueAtual(entradaEstoque);
 
         estoque.setQuantidadeEmEstoque(estoque.getQuantidadeEmEstoque() + entradaEstoque.getQuantidade());
 
-        return estoqueRepository.save(estoque);
+        return estoqueDTOConverter.from(estoqueRepository.save(estoque));
     }
 
-    public Estoque saidaNoEstoque(SaidaEstoque saidaEstoque) {
+    public EstoqueDTO saidaNoEstoque(SaidaEstoque saidaEstoque) {
         Estoque estoque = estoqueRepository.getByIdProdutoIdAndIdTamanho(saidaEstoque.getIdProduto(), saidaEstoque.getTamanho());
 
         if (estoque == null)
@@ -44,7 +49,7 @@ public class EstoqueService {
 
         estoque.setQuantidadeEmEstoque(estoque.getQuantidadeEmEstoque() - saidaEstoque.getQuantidade());
 
-        return estoqueRepository.save(estoque);
+        return estoqueDTOConverter.from(estoqueRepository.save(estoque));
     }
 
     public Estoque obtemEstoqueAtual(EntradaEstoque entradaEstoque){

@@ -1,7 +1,12 @@
 package com.gmail.gabrielcacarvalho.RestApi.service;
 
+import com.gmail.gabrielcacarvalho.RestApi.converter.Converter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.produto.ProdutoConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.produto.ProdutoDTOConverter;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Produto;
+import com.gmail.gabrielcacarvalho.RestApi.dto.produto.EntradaProdutoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.produto.FiltroListarProdutos;
+import com.gmail.gabrielcacarvalho.RestApi.dto.produto.ProdutoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,8 +25,24 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public Page<Produto> obterProdutos(Pageable pageable, FiltroListarProdutos filtros) {
-        return produtoRepository.findAll(criarFiltroBuscarLista(filtros), pageable);
+    private Converter<EntradaProdutoDTO, Produto> produtoConverter = new ProdutoConverter();
+
+    private Converter<Produto, ProdutoDTO> produtoDTOConverter = new ProdutoDTOConverter();
+
+    public Page<ProdutoDTO> obterProdutos(Pageable pageable, FiltroListarProdutos filtros) {
+        return produtoDTOConverter.from(produtoRepository.findAll(criarFiltroBuscarLista(filtros), pageable));
+    }
+
+    public ProdutoDTO obterProduto(Integer idProduto) {
+        return produtoDTOConverter.from(produtoRepository.findById(idProduto).get());
+    }
+
+    public ProdutoDTO criaProduto(EntradaProdutoDTO entradaProdutoDTO) {
+        return produtoDTOConverter.from(produtoRepository.save(produtoConverter.from(entradaProdutoDTO)));
+    }
+
+    public ProdutoDTO alteraProduto(EntradaProdutoDTO entradaProdutoDTO) {
+        return produtoDTOConverter.from(produtoRepository.save(produtoConverter.from(entradaProdutoDTO)));
     }
 
     private Specification<Produto> criarFiltroBuscarLista(FiltroListarProdutos filtroListarProdutos) {
