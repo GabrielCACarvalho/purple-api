@@ -5,7 +5,7 @@ import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Endereco;
 import com.gmail.gabrielcacarvalho.RestApi.dto.endereco.EnderecoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.endereco.EntradaEnderecoDTO;
 
-public class EnderecoConverter implements Converter<EntradaEnderecoDTO, Endereco> {
+public class EntradaDTOEnderecoConverter implements Converter<EntradaEnderecoDTO, Endereco> {
 
     @Override
     public Endereco from(EntradaEnderecoDTO entradaEnderecoDTO) {

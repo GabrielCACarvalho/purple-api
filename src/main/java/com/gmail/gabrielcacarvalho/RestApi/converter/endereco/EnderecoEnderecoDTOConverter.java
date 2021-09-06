@@ -4,7 +4,7 @@ import com.gmail.gabrielcacarvalho.RestApi.converter.Converter;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Endereco;
 import com.gmail.gabrielcacarvalho.RestApi.dto.endereco.EnderecoDTO;
 
-public class EnderecoDTOConverter implements Converter<Endereco, EnderecoDTO> {
+public class EnderecoEnderecoDTOConverter implements Converter<Endereco, EnderecoDTO> {
 
     @Override
     public EnderecoDTO from(Endereco endereco) {

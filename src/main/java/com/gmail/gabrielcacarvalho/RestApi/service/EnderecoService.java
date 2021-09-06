@@ -1,9 +1,11 @@
 package com.gmail.gabrielcacarvalho.RestApi.service;
 
 import com.gmail.gabrielcacarvalho.RestApi.converter.Converter;
-import com.gmail.gabrielcacarvalho.RestApi.converter.endereco.EnderecoDTOConverter;
-import com.gmail.gabrielcacarvalho.RestApi.converter.endereco.EnderecoConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.endereco.AlteraDTOEnderecoConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.endereco.EnderecoEnderecoDTOConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.endereco.EntradaDTOEnderecoConverter;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Endereco;
+import com.gmail.gabrielcacarvalho.RestApi.dto.endereco.AlteraEnderecoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.endereco.EnderecoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.endereco.EntradaEnderecoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.repositories.EnderecoRepository;
@@ -16,15 +18,17 @@ public class EnderecoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    private Converter<EntradaEnderecoDTO, Endereco> enderecoConverter = new EnderecoConverter();
+    private Converter<EntradaEnderecoDTO, Endereco> entradaDTOEnderecoConverter = new EntradaDTOEnderecoConverter();
 
-    private Converter<Endereco, EnderecoDTO> enderecoDTOConverter = new EnderecoDTOConverter();
+    private Converter<Endereco, EnderecoDTO> enderecoEnderecoDTOConverter = new EnderecoEnderecoDTOConverter();
+
+    private Converter<AlteraEnderecoDTO, Endereco> alteraDTOEnderecoConverter = new AlteraDTOEnderecoConverter();
 
     public EnderecoDTO criaEndereco(EntradaEnderecoDTO entradaEnderecoDTO) {
-        return enderecoDTOConverter.from(enderecoRepository.save(enderecoConverter.from(entradaEnderecoDTO)));
+        return enderecoEnderecoDTOConverter.from(enderecoRepository.save(entradaDTOEnderecoConverter.from(entradaEnderecoDTO)));
     }
 
-    public EnderecoDTO alteraEndereco(EntradaEnderecoDTO entradaEnderecoDTO) {
-        return enderecoDTOConverter.from(enderecoRepository.save(enderecoConverter.from(entradaEnderecoDTO)));
+    public EnderecoDTO alteraEndereco(AlteraEnderecoDTO alteraEnderecoDTO) {
+        return enderecoEnderecoDTOConverter.from(enderecoRepository.save(alteraDTOEnderecoConverter.from(alteraEnderecoDTO)));
     }
 }

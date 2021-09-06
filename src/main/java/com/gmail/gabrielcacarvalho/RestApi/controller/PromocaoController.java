@@ -1,5 +1,6 @@
 package com.gmail.gabrielcacarvalho.RestApi.controller;
 
+import com.gmail.gabrielcacarvalho.RestApi.dto.promocao.AlteraPromocaoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.promocao.FiltroListarPromocoes;
 import com.gmail.gabrielcacarvalho.RestApi.dto.promocao.EntradaPromocaoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.promocao.PromocaoDTO;
@@ -39,7 +40,7 @@ public class PromocaoController {
 
     @PutMapping("/altera")
     @ApiOperation("Modifica uma promoção e retorna e a promoção modificada.")
-    public ResponseEntity<PromocaoDTO> alteraPromocao(@RequestBody EntradaPromocaoDTO entradaPromocaoDTO){
-        return ResponseEntity.ok(promocaoService.alteraPromocao(entradaPromocaoDTO));
+    public ResponseEntity<PromocaoDTO> alteraPromocao(@RequestBody AlteraPromocaoDTO alteraPromocaoDTO){
+        return ResponseEntity.ok(promocaoService.alteraPromocao(alteraPromocaoDTO));
     }
 }

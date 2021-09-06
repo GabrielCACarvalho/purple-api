@@ -1,5 +1,6 @@
 package com.gmail.gabrielcacarvalho.RestApi.controller;
 
+import com.gmail.gabrielcacarvalho.RestApi.dto.produto.AlteraProdutoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.produto.FiltroListarProdutos;
 import com.gmail.gabrielcacarvalho.RestApi.dto.produto.EntradaProdutoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.produto.ProdutoDTO;
@@ -43,7 +44,7 @@ public class ProdutoController {
 
     @PutMapping("/altera")
     @ApiOperation("Modifica um produto e retorna o produto modificado.")
-    public ResponseEntity<ProdutoDTO> alteraProduto(@RequestBody EntradaProdutoDTO entradaProdutoDTO){
-        return ResponseEntity.ok(produtoService.alteraProduto(entradaProdutoDTO));
+    public ResponseEntity<ProdutoDTO> alteraProduto(@RequestBody AlteraProdutoDTO alteraProdutoDTO){
+        return ResponseEntity.ok(produtoService.alteraProduto(alteraProdutoDTO));
     }
 }

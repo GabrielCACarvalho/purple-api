@@ -4,7 +4,7 @@ import com.gmail.gabrielcacarvalho.RestApi.converter.Converter;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Promocao;
 import com.gmail.gabrielcacarvalho.RestApi.dto.promocao.PromocaoDTO;
 
-public class PromocaoDTOConverter implements Converter<Promocao, PromocaoDTO> {
+public class PromocaoPromocaoDTOConverter implements Converter<Promocao, PromocaoDTO> {
 
     @Override
     public PromocaoDTO from(Promocao promocao) {

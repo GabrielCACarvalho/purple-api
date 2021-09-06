@@ -6,8 +6,9 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class EntradaProdutoDTO {
+public class AlteraProdutoDTO {
 
+    private Integer id;
     private String nome;
     private String descricao;
     private Integer idMarca;

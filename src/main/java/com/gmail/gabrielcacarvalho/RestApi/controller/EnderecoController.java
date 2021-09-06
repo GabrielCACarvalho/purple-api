@@ -1,5 +1,6 @@
 package com.gmail.gabrielcacarvalho.RestApi.controller;
 
+import com.gmail.gabrielcacarvalho.RestApi.dto.endereco.AlteraEnderecoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.endereco.EnderecoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.endereco.EntradaEnderecoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.service.EnderecoService;
@@ -31,7 +32,7 @@ public class EnderecoController {
 
     @PutMapping("/altera")
     @ApiOperation("Modifica um endereço e retorna o endereço modificado.")
-    public ResponseEntity<EnderecoDTO> alteraEndereco(@RequestBody EntradaEnderecoDTO entradaEnderecoDTO){
-        return ResponseEntity.ok(enderecoService.alteraEndereco(entradaEnderecoDTO));
+    public ResponseEntity<EnderecoDTO> alteraEndereco(@RequestBody AlteraEnderecoDTO alteraEnderecoDTO){
+        return ResponseEntity.ok(enderecoService.alteraEndereco(alteraEnderecoDTO));
     }
 }

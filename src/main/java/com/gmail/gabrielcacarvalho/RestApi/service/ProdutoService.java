@@ -1,9 +1,11 @@
 package com.gmail.gabrielcacarvalho.RestApi.service;
 
 import com.gmail.gabrielcacarvalho.RestApi.converter.Converter;
-import com.gmail.gabrielcacarvalho.RestApi.converter.produto.ProdutoConverter;
-import com.gmail.gabrielcacarvalho.RestApi.converter.produto.ProdutoDTOConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.produto.AlteraDTOProdutoConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.produto.EntradaDTOProdutoConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.produto.ProdutoProdutoDTOConverter;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Produto;
+import com.gmail.gabrielcacarvalho.RestApi.dto.produto.AlteraProdutoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.produto.EntradaProdutoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.produto.FiltroListarProdutos;
 import com.gmail.gabrielcacarvalho.RestApi.dto.produto.ProdutoDTO;
@@ -25,24 +27,26 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    private Converter<EntradaProdutoDTO, Produto> produtoConverter = new ProdutoConverter();
+    private Converter<EntradaProdutoDTO, Produto> entradaDTOProdutoConverter = new EntradaDTOProdutoConverter();
 
-    private Converter<Produto, ProdutoDTO> produtoDTOConverter = new ProdutoDTOConverter();
+    private Converter<AlteraProdutoDTO, Produto> alteraDTOProdutoConverter = new AlteraDTOProdutoConverter();
+
+    private Converter<Produto, ProdutoDTO> produtoProdutoDTOConverter = new ProdutoProdutoDTOConverter();
 
     public Page<ProdutoDTO> obterProdutos(Pageable pageable, FiltroListarProdutos filtros) {
-        return produtoDTOConverter.from(produtoRepository.findAll(criarFiltroBuscarLista(filtros), pageable));
+        return produtoProdutoDTOConverter.from(produtoRepository.findAll(criarFiltroBuscarLista(filtros), pageable));
     }
 
     public ProdutoDTO obterProduto(Integer idProduto) {
-        return produtoDTOConverter.from(produtoRepository.findById(idProduto).get());
+        return produtoProdutoDTOConverter.from(produtoRepository.findById(idProduto).get());
     }
 
     public ProdutoDTO criaProduto(EntradaProdutoDTO entradaProdutoDTO) {
-        return produtoDTOConverter.from(produtoRepository.save(produtoConverter.from(entradaProdutoDTO)));
+        return produtoProdutoDTOConverter.from(produtoRepository.save(entradaDTOProdutoConverter.from(entradaProdutoDTO)));
     }
 
-    public ProdutoDTO alteraProduto(EntradaProdutoDTO entradaProdutoDTO) {
-        return produtoDTOConverter.from(produtoRepository.save(produtoConverter.from(entradaProdutoDTO)));
+    public ProdutoDTO alteraProduto(AlteraProdutoDTO alteraProdutoDTO) {
+        return produtoProdutoDTOConverter.from(produtoRepository.save(alteraDTOProdutoConverter.from(alteraProdutoDTO)));
     }
 
     private Specification<Produto> criarFiltroBuscarLista(FiltroListarProdutos filtroListarProdutos) {

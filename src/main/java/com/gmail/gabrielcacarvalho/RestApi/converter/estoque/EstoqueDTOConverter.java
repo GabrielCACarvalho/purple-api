@@ -1,7 +1,7 @@
 package com.gmail.gabrielcacarvalho.RestApi.converter.estoque;
 
 import com.gmail.gabrielcacarvalho.RestApi.converter.Converter;
-import com.gmail.gabrielcacarvalho.RestApi.converter.produto.ProdutoDTOConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.produto.ProdutoProdutoDTOConverter;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Estoque;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Produto;
 import com.gmail.gabrielcacarvalho.RestApi.dto.enumerator.TamanhoDTO;
@@ -10,7 +10,7 @@ import com.gmail.gabrielcacarvalho.RestApi.dto.produto.ProdutoDTO;
 
 public class EstoqueDTOConverter implements Converter<Estoque, EstoqueDTO> {
 
-    private Converter<Produto, ProdutoDTO> produtoDTOConverter = new ProdutoDTOConverter();
+    private Converter<Produto, ProdutoDTO> produtoDTOConverter = new ProdutoProdutoDTOConverter();
 
     @Override
     public EstoqueDTO from(Estoque estoque) {

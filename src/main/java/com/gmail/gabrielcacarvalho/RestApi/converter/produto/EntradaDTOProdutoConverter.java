@@ -8,7 +8,7 @@ import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Promocao;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.TipoVestimenta;
 import com.gmail.gabrielcacarvalho.RestApi.dto.produto.EntradaProdutoDTO;
 
-public class ProdutoConverter implements Converter<EntradaProdutoDTO, Produto> {
+public class EntradaDTOProdutoConverter implements Converter<EntradaProdutoDTO, Produto> {
 
     @Override
     public Produto from(EntradaProdutoDTO entradaProdutoDTO) {

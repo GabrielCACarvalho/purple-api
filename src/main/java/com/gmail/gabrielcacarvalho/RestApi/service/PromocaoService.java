@@ -1,9 +1,11 @@
 package com.gmail.gabrielcacarvalho.RestApi.service;
 
 import com.gmail.gabrielcacarvalho.RestApi.converter.Converter;
-import com.gmail.gabrielcacarvalho.RestApi.converter.promocao.PromocaoConverter;
-import com.gmail.gabrielcacarvalho.RestApi.converter.promocao.PromocaoDTOConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.promocao.AlteraDTOPromocaoConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.promocao.EntredaDTOPromocaoConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.promocao.PromocaoPromocaoDTOConverter;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Promocao;
+import com.gmail.gabrielcacarvalho.RestApi.dto.promocao.AlteraPromocaoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.promocao.FiltroListarPromocoes;
 import com.gmail.gabrielcacarvalho.RestApi.dto.promocao.EntradaPromocaoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.promocao.PromocaoDTO;
@@ -25,20 +27,22 @@ public class PromocaoService {
     @Autowired
     private PromocaoRepository promocaoRepository;
 
-    private Converter<EntradaPromocaoDTO, Promocao> promocaoConverter = new PromocaoConverter();
+    private Converter<EntradaPromocaoDTO, Promocao> entradaDTOPromocaoConverter = new EntredaDTOPromocaoConverter();
 
-    private Converter<Promocao, PromocaoDTO> promocaoDTOConveter = new PromocaoDTOConverter();
+    private Converter<Promocao, PromocaoDTO> promocaoPromocaoDTOConverter = new PromocaoPromocaoDTOConverter();
+
+    private Converter<AlteraPromocaoDTO, Promocao> alteraDTOPromocaoConverter = new AlteraDTOPromocaoConverter();
 
     public Page<PromocaoDTO> obterPromocoes(Pageable pageable, FiltroListarPromocoes filtros){
-        return promocaoDTOConveter.from(promocaoRepository.findAll(criarFiltrosBuscarLista(filtros), pageable));
+        return promocaoPromocaoDTOConverter.from(promocaoRepository.findAll(criarFiltrosBuscarLista(filtros), pageable));
     }
 
     public PromocaoDTO criaPromocao(EntradaPromocaoDTO entradaPromocaoDTO) {
-        return promocaoDTOConveter.from(promocaoRepository.save(promocaoConverter.from(entradaPromocaoDTO)));
+        return promocaoPromocaoDTOConverter.from(promocaoRepository.save(entradaDTOPromocaoConverter.from(entradaPromocaoDTO)));
     }
 
-    public PromocaoDTO alteraPromocao(EntradaPromocaoDTO entradaPromocaoDTO) {
-        return promocaoDTOConveter.from(promocaoRepository.save(promocaoConverter.from(entradaPromocaoDTO)));
+    public PromocaoDTO alteraPromocao(AlteraPromocaoDTO alteraPromocaoDTO) {
+        return promocaoPromocaoDTOConverter.from(promocaoRepository.save(alteraDTOPromocaoConverter.from(alteraPromocaoDTO)));
     }
 
     private Specification<Promocao> criarFiltrosBuscarLista(FiltroListarPromocoes filtroListarPromocoes){
