@@ -31,4 +31,8 @@ public class EnderecoService {
     public EnderecoDTO alteraEndereco(AlteraEnderecoDTO alteraEnderecoDTO) {
         return enderecoEnderecoDTOConverter.from(enderecoRepository.save(alteraDTOEnderecoConverter.from(alteraEnderecoDTO)));
     }
+
+    public EnderecoDTO obterEndereco(Integer idEndereco) {
+        return enderecoEnderecoDTOConverter.from(enderecoRepository.findById(idEndereco).get());
+    }
 }

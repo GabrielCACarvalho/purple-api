@@ -18,11 +18,13 @@ public class EnderecoController {
     @Autowired
     private EnderecoService enderecoService;
 
-    /*@GetMapping("/{idEndereco}")
-    @ApiOperation("")
-    public ResponseEntity<Endereco> obterEndereco(){
-        return ResponseEntity.ok(enderecoService.obterEndereco());
-    }*/
+    @GetMapping("/{idEndereco}")
+    @ApiOperation("Retorna um endereço pelo id.")
+    public ResponseEntity<EnderecoDTO> obterEndereco(@PathVariable Integer idEndereco){
+        return ResponseEntity.ok(enderecoService.obterEndereco(idEndereco));
+    }
+
+    //TODO: Consulta frete de acordo com o CEP
 
     @PostMapping("/novo")
     @ApiOperation("Cadastra um novo endereço e retorna o endereço cadastrado.")
