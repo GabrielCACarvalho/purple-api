@@ -10,6 +10,7 @@ public class EnderecoEnderecoDTOConverter implements Converter<Endereco, Enderec
     public EnderecoDTO from(Endereco endereco) {
         EnderecoDTO enderecoDTO = new EnderecoDTO();
 
+        enderecoDTO.setId(endereco.getId());
         enderecoDTO.setBairro(endereco.getBairro());
         enderecoDTO.setCep(endereco.getCep());
         enderecoDTO.setCidade(endereco.getCidade());

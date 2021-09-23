@@ -20,7 +20,8 @@ public class Cliente {
     private String cnpj;
     @Column(length = 11)
     private String cpf;
-    private String email;
+    @OneToOne
+    private CredencialCliente credencialCliente;
     @Column(length = 11)
     private String celular;
     @OneToOne
