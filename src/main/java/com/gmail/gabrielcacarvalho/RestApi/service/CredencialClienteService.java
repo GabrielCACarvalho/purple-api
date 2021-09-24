@@ -5,12 +5,13 @@ import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Role;
 import com.gmail.gabrielcacarvalho.RestApi.repositories.CredencialClienteRepository;
 import com.gmail.gabrielcacarvalho.RestApi.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,8 +25,7 @@ public class CredencialClienteService implements UserDetailsService {
     private CredencialClienteRepository credencialClienteRepository;
     @Autowired
     private RoleRepository roleRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
 
     @Override
     public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException {
@@ -40,8 +40,13 @@ public class CredencialClienteService implements UserDetailsService {
     }
 
     public CredencialCliente salvaCredencial(CredencialCliente credencialCliente){
-        credencialCliente.setSenha(passwordEncoder.encode(credencialCliente.getSenha()));
+        credencialCliente.setSenha(passwordEncoder().encode(credencialCliente.getSenha()));
         return credencialClienteRepository.save(credencialCliente);
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     public Role salvaRole(Role role){//TODO: Criar os DTOS de Role
@@ -57,6 +62,4 @@ public class CredencialClienteService implements UserDetailsService {
     public CredencialCliente obterCredencialPorEmail(String usuario) {
         return credencialClienteRepository.findByUsuario(usuario);
     }
-
-
 }

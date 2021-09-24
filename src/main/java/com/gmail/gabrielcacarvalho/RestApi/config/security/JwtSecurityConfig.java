@@ -25,8 +25,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtAuthenticationHandler jwtAuthenticationHandler;
-
     private final CredencialClienteService credencialClienteService;
 
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
@@ -53,7 +51,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
             auth.userDetailsService(credencialClienteService)
-                    .passwordEncoder(passwordEncoder());
+                    .passwordEncoder(credencialClienteService.passwordEncoder());
     }
 
     @Override
@@ -66,11 +64,6 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtUtil));
         http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
-    }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Bean
