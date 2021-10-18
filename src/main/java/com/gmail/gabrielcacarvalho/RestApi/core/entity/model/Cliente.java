@@ -16,8 +16,6 @@ public class Cliente {
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
     private String nome;
-    @Column(length = 14)
-    private String cnpj;
     @Column(length = 11)
     private String cpf;
     @OneToOne

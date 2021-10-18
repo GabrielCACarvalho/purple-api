@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.gmail.gabrielcacarvalho.RestApi.config.security.dto.AuthenticationResponseDTO;
 import com.gmail.gabrielcacarvalho.RestApi.config.security.util.JwtUtil;
-import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.CredencialClienteDTO;
+import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.credencial.CredencialClienteDTO;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

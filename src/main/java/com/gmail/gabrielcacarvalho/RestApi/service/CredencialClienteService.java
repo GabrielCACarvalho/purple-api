@@ -1,7 +1,11 @@
 package com.gmail.gabrielcacarvalho.RestApi.service;
 
+import com.gmail.gabrielcacarvalho.RestApi.converter.cliente.credencial.CredencialCredencialDTOConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.cliente.credencial.CredencialDTOCredencialConverter;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.CredencialCliente;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Role;
+import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.credencial.AlteraCredencialClienteDTO;
+import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.credencial.CredencialClienteDTO;
 import com.gmail.gabrielcacarvalho.RestApi.repositories.CredencialClienteRepository;
 import com.gmail.gabrielcacarvalho.RestApi.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,8 @@ public class CredencialClienteService implements UserDetailsService {
     @Autowired
     private RoleRepository roleRepository;
 
+    private CredencialCredencialDTOConverter credencialCredencialDTOConverter = new CredencialCredencialDTOConverter();
+    private CredencialDTOCredencialConverter credencialDTOCredencialConverter = new CredencialDTOCredencialConverter();
 
     @Override
     public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException {
@@ -39,14 +45,10 @@ public class CredencialClienteService implements UserDetailsService {
                         .collect(Collectors.toList()));
     }
 
-    public CredencialCliente salvaCredencial(CredencialCliente credencialCliente){
-        credencialCliente.setSenha(passwordEncoder().encode(credencialCliente.getSenha()));
-        return credencialClienteRepository.save(credencialCliente);
-    }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public CredencialClienteDTO salvaCredencial(CredencialClienteDTO credencialClienteDTO){
+        credencialClienteDTO.setSenha(passwordEncoder().encode(credencialClienteDTO.getSenha()));
+        return credencialCredencialDTOConverter.from(credencialClienteRepository
+                .save(credencialDTOCredencialConverter.from(credencialClienteDTO)));
     }
 
     public Role salvaRole(Role role){//TODO: Criar os DTOS de Role
@@ -59,7 +61,16 @@ public class CredencialClienteService implements UserDetailsService {
         credencialCliente.getRoles().add(role);
     }
 
-    public CredencialCliente obterCredencialPorEmail(String usuario) {
-        return credencialClienteRepository.findByUsuario(usuario);
+    public CredencialClienteDTO alteraCredencial(AlteraCredencialClienteDTO alteraCredencialClienteDTO) {
+        CredencialCliente credencialCliente = credencialClienteRepository.findByUsuario(alteraCredencialClienteDTO.getUsuario());
+
+        credencialCliente.setSenha(passwordEncoder().encode(alteraCredencialClienteDTO.getNovaSenha()));
+
+        return credencialCredencialDTOConverter.from(credencialClienteRepository.save(credencialCliente));
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

@@ -1,4 +1,4 @@
-package com.gmail.gabrielcacarvalho.RestApi.dto.cliente;
+package com.gmail.gabrielcacarvalho.RestApi.dto.cliente.credencial;
 
 import lombok.Data;
 

@@ -1,6 +1,8 @@
 package com.gmail.gabrielcacarvalho.RestApi.controller;
 
-import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Cliente;
+import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.AlteraClienteDTO;
+import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.ClienteDTO;
+import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.EntradaClienteDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.FiltroListarClientes;
 import com.gmail.gabrielcacarvalho.RestApi.service.ClienteService;
 import io.swagger.annotations.Api;
@@ -14,17 +16,35 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("/cliente")
 @Api("Clientes") //TODO: ALTERAR TODOS OS AUTOWIRED PARA USAR O @ALLARGSCONSTRUCTOR
 public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
 
-    @GetMapping
+    @GetMapping("/listar")
     @ApiOperation(value = "Retorna Clientes de acordo com o filtro.")
-    public ResponseEntity<Page<Cliente>> obterClientes(@PageableDefault(page = 0, size = 1, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+    public ResponseEntity<Page<ClienteDTO>> obterClientes(@PageableDefault(page = 0, size = 1, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
                                                         @RequestBody(required = false) FiltroListarClientes filtros){
         return ResponseEntity.ok(clienteService.obterClientes(pageable, filtros));
+    }
+
+    @PostMapping("/novo")
+    @ApiOperation(value = "Cria um novo cliente.")
+    public ResponseEntity<ClienteDTO> novoCliente(@RequestBody EntradaClienteDTO entradaClienteDTO){
+        return ResponseEntity.ok(clienteService.novoCliente(entradaClienteDTO));
+    }
+
+    @PutMapping("/altera")
+    @ApiOperation(value = "")
+    public ResponseEntity<ClienteDTO> alteraCliente(@RequestBody AlteraClienteDTO alteraClienteDTO){
+        return ResponseEntity.ok(clienteService.alteraCliente(alteraClienteDTO));
+    }
+
+    @PutMapping("/adicionar/endereco/{idEndereco}")
+    @ApiOperation(value = "Adiciona um endereco ao cliente logado.")
+    public ResponseEntity<ClienteDTO> addEnderecoCliente(@PathVariable String idEndereco){
+        return ResponseEntity.ok(clienteService.addEnderecoCliente(idEndereco));
     }
 }
