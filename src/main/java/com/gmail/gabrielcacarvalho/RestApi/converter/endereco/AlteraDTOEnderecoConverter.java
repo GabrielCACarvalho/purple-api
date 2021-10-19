@@ -10,7 +10,6 @@ public class AlteraDTOEnderecoConverter implements Converter<AlteraEnderecoDTO, 
     public Endereco from(AlteraEnderecoDTO alteraEnderecoDTO) {
         Endereco endereco = new Endereco();
 
-        endereco.setId(alteraEnderecoDTO.getId());
         endereco.setCep(alteraEnderecoDTO.getCep());
         endereco.setRua(alteraEnderecoDTO.getRua());
         endereco.setNumero(alteraEnderecoDTO.getNumero());

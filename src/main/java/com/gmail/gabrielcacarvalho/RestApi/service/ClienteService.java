@@ -22,11 +22,15 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.Predicate;
+import javax.transaction.Transactional;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ClienteService {
 
     @Autowired
@@ -49,8 +53,9 @@ public class ClienteService {
         Cliente cliente = entradaDTOClienteConverter.from(entradaClienteDTO);
 
         cliente.setCredencialCliente(credencialClienteRepository.findByUsuario(cliente.getCredencialCliente().getUsuario()));
+        cliente.setDataCadastro(Date.from(Instant.now()));
 
-        return clienteClienteDTOConverter.from(cliente);
+        return clienteClienteDTOConverter.from(clienteRepository.save(cliente));
     }
 
     public ClienteDTO alteraCliente(AlteraClienteDTO alteraClienteDTO){
@@ -60,14 +65,6 @@ public class ClienteService {
         cliente.setCpf(alteraClienteDTO.getCpf());
         cliente.setCelular(alteraClienteDTO.getCelular());
         cliente.setSexo(alteraClienteDTO.getSexo());
-
-        return clienteClienteDTOConverter.from(clienteRepository.save(cliente));
-    }
-
-    public ClienteDTO addEnderecoCliente(String idEndereco){
-        Cliente cliente = clienteRepository.findByCredencialClienteUsuario(ClienteAutenticadoUtil.getUsuarioClienteAutenticado());
-
-        cliente.setEndereco(enderecoRepository.save(enderecoRepository.findById(Integer.valueOf(idEndereco)).get()));
 
         return clienteClienteDTOConverter.from(clienteRepository.save(cliente));
     }
@@ -88,5 +85,9 @@ public class ClienteService {
 
             return builder.and(predicates.toArray(new Predicate[0]));
         };
+    }
+
+    public Cliente consultaClienteAutenticado() {
+       return clienteRepository.findByCredencialClienteUsuario(ClienteAutenticadoUtil.getUsuarioClienteAutenticado());
     }
 }

@@ -1,5 +1,6 @@
 package com.gmail.gabrielcacarvalho.RestApi.controller;
 
+import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Cliente;
 import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.AlteraClienteDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.ClienteDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.EntradaClienteDTO;
@@ -42,9 +43,9 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.alteraCliente(alteraClienteDTO));
     }
 
-    @PutMapping("/adicionar/endereco/{idEndereco}")
-    @ApiOperation(value = "Adiciona um endereco ao cliente logado.")
-    public ResponseEntity<ClienteDTO> addEnderecoCliente(@PathVariable String idEndereco){
-        return ResponseEntity.ok(clienteService.addEnderecoCliente(idEndereco));
+    @GetMapping("/autenticado")
+    @ApiOperation(value = "Consulta o cliente autenticado")
+    public ResponseEntity<Cliente> consultaCliente(){
+        return ResponseEntity.ok(clienteService.consultaClienteAutenticado());
     }
 }
