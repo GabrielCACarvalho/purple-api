@@ -45,7 +45,7 @@ public class CredencialClienteService implements UserDetailsService {
                         .collect(Collectors.toList()));
     }
 
-    public CredencialClienteDTO salvaCredencial(CredencialClienteDTO credencialClienteDTO){
+    public CredencialClienteDTO criaCredencial(CredencialClienteDTO credencialClienteDTO){
         credencialClienteDTO.setSenha(passwordEncoder().encode(credencialClienteDTO.getSenha()));
         return credencialCredencialDTOConverter.from(credencialClienteRepository
                 .save(credencialDTOCredencialConverter.from(credencialClienteDTO)));

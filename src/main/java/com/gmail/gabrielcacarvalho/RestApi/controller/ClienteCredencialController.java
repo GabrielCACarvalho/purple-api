@@ -23,7 +23,7 @@ public class ClienteCredencialController {
     @ApiOperation(value = "Cria uma nova credencial cliente.")
     public ResponseEntity<CredencialClienteDTO> criarCredencial(@RequestBody CredencialClienteDTO credencialClienteDTO){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/credencial/nova").toUriString());
-        return ResponseEntity.created(uri).body(credencialClienteService.salvaCredencial(credencialClienteDTO));
+        return ResponseEntity.created(uri).body(credencialClienteService.criaCredencial(credencialClienteDTO));
     }
 
     @PutMapping("/esqueceu/senha")

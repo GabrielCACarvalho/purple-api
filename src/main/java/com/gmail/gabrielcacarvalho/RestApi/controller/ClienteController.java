@@ -33,8 +33,8 @@ public class ClienteController {
 
     @PostMapping("/novo")
     @ApiOperation(value = "Cria um novo cliente.")
-    public ResponseEntity<ClienteDTO> novoCliente(@RequestBody EntradaClienteDTO entradaClienteDTO){
-        return ResponseEntity.ok(clienteService.novoCliente(entradaClienteDTO));
+    public ResponseEntity<ClienteDTO> novoCliente(){
+        return ResponseEntity.ok(clienteService.novoCliente());
     }
 
     @PutMapping("/altera")

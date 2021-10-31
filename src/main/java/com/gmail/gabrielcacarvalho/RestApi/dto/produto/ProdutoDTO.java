@@ -5,8 +5,10 @@ import com.gmail.gabrielcacarvalho.RestApi.dto.marca.MarcaDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.promocao.PromocaoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.tipovestimenta.TipoVestimentaDTO;
 import lombok.Data;
+import org.springframework.core.io.Resource;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class ProdutoDTO {

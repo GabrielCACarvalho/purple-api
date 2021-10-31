@@ -5,7 +5,6 @@ import com.gmail.gabrielcacarvalho.RestApi.converter.Converter;
 import com.gmail.gabrielcacarvalho.RestApi.converter.endereco.EntradaDTOEnderecoConverter;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Cliente;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.CredencialCliente;
-import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Endereco;
 import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.EntradaClienteDTO;
 
 public class EntradaDTOClienteConverter implements Converter<EntradaClienteDTO, Cliente> {

@@ -49,8 +49,11 @@ public class ClienteService {
         return clienteClienteDTOConverter.from(clienteRepository.findAll(criarFiltrosBuscarLista(filtros), pageable));
     }
 
-    public ClienteDTO novoCliente(EntradaClienteDTO entradaClienteDTO){
-        Cliente cliente = entradaDTOClienteConverter.from(entradaClienteDTO);
+    public ClienteDTO novoCliente(){
+        Cliente cliente = new Cliente();
+
+        cliente.setCredencialCliente(new CredencialCliente());
+        cliente.getCredencialCliente().setUsuario(ClienteAutenticadoUtil.getUsuarioClienteAutenticado());
 
         cliente.setCredencialCliente(credencialClienteRepository.findByUsuario(cliente.getCredencialCliente().getUsuario()));
         cliente.setDataCadastro(Date.from(Instant.now()));

@@ -10,9 +10,13 @@ import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Promocao;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.TipoVestimenta;
 import com.gmail.gabrielcacarvalho.RestApi.dto.enumerator.CategoriaDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.marca.MarcaDTO;
+import com.gmail.gabrielcacarvalho.RestApi.dto.produto.ImagemDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.produto.ProdutoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.promocao.PromocaoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.tipovestimenta.TipoVestimentaDTO;
+import org.springframework.core.io.ByteArrayResource;
+
+import java.util.stream.Collectors;
 
 public class ProdutoProdutoDTOConverter implements Converter<Produto, ProdutoDTO> {
 

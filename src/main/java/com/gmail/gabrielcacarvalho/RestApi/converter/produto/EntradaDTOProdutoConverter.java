@@ -19,9 +19,12 @@ public class EntradaDTOProdutoConverter implements Converter<EntradaProdutoDTO, 
         produto.setNome(entradaProdutoDTO.getNome());
         produto.setValorUnitario(entradaProdutoDTO.getValorUnitario());
         produto.setCategoria(Categoria.valueOf(entradaProdutoDTO.getCategoria().name()));
-        produto.setMarca(new Marca(entradaProdutoDTO.getIdMarca()));
-        produto.setPromocao(new Promocao(entradaProdutoDTO.getIdPromocao()));
-        produto.setTipoVestimenta(new TipoVestimenta(entradaProdutoDTO.getIdTipoVestimenta()));
+        if (entradaProdutoDTO.getIdMarca() != null)
+            produto.setMarca(new Marca(entradaProdutoDTO.getIdMarca()));
+        if (entradaProdutoDTO.getIdPromocao() != null)
+            produto.setPromocao(new Promocao(entradaProdutoDTO.getIdPromocao()));
+        if (entradaProdutoDTO.getIdTipoVestimenta() != null)
+            produto.setTipoVestimenta(new TipoVestimenta(entradaProdutoDTO.getIdTipoVestimenta()));
 
         return produto;
     }
