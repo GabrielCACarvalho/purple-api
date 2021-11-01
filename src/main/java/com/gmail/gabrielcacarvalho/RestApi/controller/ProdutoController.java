@@ -28,7 +28,7 @@ public class ProdutoController {
 
     @PostMapping("/listar")
     @ApiOperation("Retorna produtos de acordo com o filtro.")
-    public ResponseEntity<Page<ProdutoDTO>> obterProdutos(@PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
+    public ResponseEntity<Page<ProdutoDTO>> obterProdutos(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
                                                           @RequestBody(required = false) FiltroListarProdutos filtros){
         return ResponseEntity.ok(produtoService.obterProdutos(pageable, filtros));
     }
@@ -54,11 +54,10 @@ public class ProdutoController {
 
     @GetMapping("{idProduto}/imagens")
     @ApiOperation("Busca imagens do produto escolhido.")
-    public ResponseEntity<List<ImagemDTO>> obtemImagemProduto(@PathVariable Integer idProduto){
+    public ResponseEntity<?> obtemImagemProduto(@PathVariable Integer idProduto){
         List<ImagemDTO> imagemDTOS = produtoService.obterImagensProduto(idProduto);
 
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment")
-                .body(imagemDTOS);
+        return ResponseEntity.ok(imagemDTOS);
     }
 
     @PutMapping("/altera")

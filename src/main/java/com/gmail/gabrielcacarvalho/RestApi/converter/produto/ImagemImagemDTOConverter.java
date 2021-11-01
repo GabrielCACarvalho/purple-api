@@ -11,7 +11,7 @@ public class ImagemImagemDTOConverter implements Converter<Imagem, ImagemDTO> {
         ImagemDTO imagemDTO = new ImagemDTO();
 
         imagemDTO.setNome(imagem.getNome());
-        imagemDTO.setArquivo(new ByteArrayResource(imagem.getArquivo()));
+        imagemDTO.setArquivo(imagem.getArquivo());
 
         return imagemDTO;
     }

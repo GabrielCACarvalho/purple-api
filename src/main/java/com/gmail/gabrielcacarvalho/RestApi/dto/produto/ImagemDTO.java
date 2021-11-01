@@ -7,5 +7,5 @@ import org.springframework.core.io.Resource;
 public class ImagemDTO {
 
     private String nome;
-    private Resource arquivo;
+    private byte[] arquivo;
 }
