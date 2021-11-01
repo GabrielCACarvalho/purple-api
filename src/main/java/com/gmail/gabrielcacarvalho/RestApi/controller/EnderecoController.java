@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/endereco")
-@Api("Endereços")
+@Api(tags = "Endereços")
 public class EnderecoController {
 
     @Autowired

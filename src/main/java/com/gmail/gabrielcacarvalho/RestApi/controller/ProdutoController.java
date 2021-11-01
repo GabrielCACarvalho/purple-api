@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/produto")
-@Api("Produtos")
+@Api(tags = "Produtos")
 public class ProdutoController {
 
     @Autowired
@@ -65,5 +65,11 @@ public class ProdutoController {
     @ApiOperation("Modifica um produto e retorna o produto modificado.")
     public ResponseEntity<ProdutoDTO> alteraProduto(@RequestBody AlteraProdutoDTO alteraProdutoDTO){
         return ResponseEntity.ok(produtoService.alteraProduto(alteraProdutoDTO));
+    }
+
+    @DeleteMapping("/deleta/{idProduto}")
+    @ApiOperation("Deleta um produto.")
+    public void deletaProduto(@PathVariable Integer idProduto){
+        produtoService.deletaProduto(idProduto);
     }
 }

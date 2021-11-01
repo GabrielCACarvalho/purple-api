@@ -4,7 +4,7 @@ import com.gmail.gabrielcacarvalho.RestApi.converter.Converter;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Marca;
 import com.gmail.gabrielcacarvalho.RestApi.dto.marca.MarcaDTO;
 
-public class MarcaDTOConverter implements Converter<Marca, MarcaDTO> {
+public class MarcaMarcaDTOConverter implements Converter<Marca, MarcaDTO> {
     @Override
     public MarcaDTO from(Marca marca) {
         MarcaDTO marcaDTO = new MarcaDTO();

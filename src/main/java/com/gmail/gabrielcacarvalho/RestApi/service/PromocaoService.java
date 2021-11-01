@@ -2,7 +2,7 @@ package com.gmail.gabrielcacarvalho.RestApi.service;
 
 import com.gmail.gabrielcacarvalho.RestApi.converter.Converter;
 import com.gmail.gabrielcacarvalho.RestApi.converter.promocao.AlteraDTOPromocaoConverter;
-import com.gmail.gabrielcacarvalho.RestApi.converter.promocao.EntredaDTOPromocaoConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.promocao.EntradaDTOPromocaoConverter;
 import com.gmail.gabrielcacarvalho.RestApi.converter.promocao.PromocaoPromocaoDTOConverter;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Promocao;
 import com.gmail.gabrielcacarvalho.RestApi.dto.promocao.AlteraPromocaoDTO;
@@ -27,7 +27,7 @@ public class PromocaoService {
     @Autowired
     private PromocaoRepository promocaoRepository;
 
-    private Converter<EntradaPromocaoDTO, Promocao> entradaDTOPromocaoConverter = new EntredaDTOPromocaoConverter();
+    private Converter<EntradaPromocaoDTO, Promocao> entradaDTOPromocaoConverter = new EntradaDTOPromocaoConverter();
 
     private Converter<Promocao, PromocaoDTO> promocaoPromocaoDTOConverter = new PromocaoPromocaoDTOConverter();
 
@@ -45,11 +45,15 @@ public class PromocaoService {
         return promocaoPromocaoDTOConverter.from(promocaoRepository.save(alteraDTOPromocaoConverter.from(alteraPromocaoDTO)));
     }
 
-    private Specification<Promocao> criarFiltrosBuscarLista(FiltroListarPromocoes filtroListarPromocoes){
+    public void deletaPromocao(Integer idPromocao) {
+        promocaoRepository.delete(promocaoRepository.getById(idPromocao));
+    }
+
+    private Specification<Promocao> criarFiltrosBuscarLista(FiltroListarPromocoes filtroListarPromocoes) {
 
         FiltroListarPromocoes filtros = Optional.ofNullable(filtroListarPromocoes).orElse(new FiltroListarPromocoes());
 
-        return (root, query, builder) ->{
+        return (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             if (filtros.getDataFim() != null && filtros.getDataInicio() != null)

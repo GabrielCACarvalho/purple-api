@@ -1,28 +1,24 @@
 package com.gmail.gabrielcacarvalho.RestApi.converter.produto;
 
 import com.gmail.gabrielcacarvalho.RestApi.converter.Converter;
-import com.gmail.gabrielcacarvalho.RestApi.converter.marca.MarcaDTOConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.marca.MarcaMarcaDTOConverter;
 import com.gmail.gabrielcacarvalho.RestApi.converter.promocao.PromocaoPromocaoDTOConverter;
-import com.gmail.gabrielcacarvalho.RestApi.converter.tipovestimenta.TipoVestimentaDTOConverter;
+import com.gmail.gabrielcacarvalho.RestApi.converter.tipovestimenta.TipoVestimentaTipoVestimentaDTOConverter;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Marca;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Produto;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.Promocao;
 import com.gmail.gabrielcacarvalho.RestApi.core.entity.model.TipoVestimenta;
 import com.gmail.gabrielcacarvalho.RestApi.dto.enumerator.CategoriaDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.marca.MarcaDTO;
-import com.gmail.gabrielcacarvalho.RestApi.dto.produto.ImagemDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.produto.ProdutoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.promocao.PromocaoDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.tipovestimenta.TipoVestimentaDTO;
-import org.springframework.core.io.ByteArrayResource;
-
-import java.util.stream.Collectors;
 
 public class ProdutoProdutoDTOConverter implements Converter<Produto, ProdutoDTO> {
 
     private Converter<Promocao, PromocaoDTO> promocaoDTOConverter = new PromocaoPromocaoDTOConverter();
-    private Converter<Marca, MarcaDTO> marcaDTOConverter = new MarcaDTOConverter();
-    private Converter<TipoVestimenta, TipoVestimentaDTO> tipoVestimentaDTOConverter = new TipoVestimentaDTOConverter();
+    private Converter<Marca, MarcaDTO> marcaDTOConverter = new MarcaMarcaDTOConverter();
+    private Converter<TipoVestimenta, TipoVestimentaDTO> tipoVestimentaDTOConverter = new TipoVestimentaTipoVestimentaDTOConverter();
 
     @Override
     public ProdutoDTO from(Produto produto) {

@@ -4,6 +4,7 @@ import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.credencial.AlteraCredenci
 import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.credencial.CredencialClienteDTO;
 import com.gmail.gabrielcacarvalho.RestApi.dto.cliente.credencial.RoleToCredentialDTO;
 import com.gmail.gabrielcacarvalho.RestApi.service.CredencialClienteService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/credencial")
+@Api(tags = "Credencial Cliente")
 @RequiredArgsConstructor
 public class ClienteCredencialController {
 

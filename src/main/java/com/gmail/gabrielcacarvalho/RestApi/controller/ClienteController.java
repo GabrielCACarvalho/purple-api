@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cliente")
-@Api("Clientes") //TODO: ALTERAR TODOS OS AUTOWIRED PARA USAR O @ALLARGSCONSTRUCTOR
+@Api(tags = "Clientes") //TODO: ALTERAR TODOS OS AUTOWIRED PARA USAR O @ALLARGSCONSTRUCTOR
 public class ClienteController {
 
     @Autowired

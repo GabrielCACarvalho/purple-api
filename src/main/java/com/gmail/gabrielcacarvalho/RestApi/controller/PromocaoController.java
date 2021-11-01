@@ -19,13 +19,13 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/promocao")
-@Api("Promoções")
+@Api(tags = "Promoção")
 public class PromocaoController {
 
     @Autowired
     private PromocaoService promocaoService;
 
-    @GetMapping("/listar")
+    @PostMapping("/listar")
     @ApiOperation("Retorna promoções de acordo com o filtro. Date pattern = yyyy-MM-dd")
     public ResponseEntity<Page<PromocaoDTO>> obterPromocoes(@PageableDefault(page = 0, size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                                             @Valid @RequestBody(required = false) FiltroListarPromocoes filtros){
@@ -42,5 +42,11 @@ public class PromocaoController {
     @ApiOperation("Modifica uma promoção e retorna e a promoção modificada.")
     public ResponseEntity<PromocaoDTO> alteraPromocao(@RequestBody AlteraPromocaoDTO alteraPromocaoDTO){
         return ResponseEntity.ok(promocaoService.alteraPromocao(alteraPromocaoDTO));
+    }
+
+    @DeleteMapping("/deleta/{idPromocao}")
+    @ApiOperation("Deleta uma promoção.")
+    public void deletaPromocao(@PathVariable Integer idPromocao){
+        promocaoService.deletaPromocao(idPromocao);
     }
 }

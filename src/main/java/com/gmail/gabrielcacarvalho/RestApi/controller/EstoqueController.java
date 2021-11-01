@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/estoque")
-@Api("Estoque")
+@Api(tags = "Estoque")
 public class EstoqueController {
 
     @Autowired
     private EstoqueService estoqueService;
 
-    @GetMapping
+    @PostMapping
     @ApiOperation("Consulta o estoque de um produto")
     public ResponseEntity<EstoqueDTO> consultaEstoque(@RequestBody FiltroConsultaEstoque filtroConsultaEstoque){
         return ResponseEntity.ok(estoqueService.consultaEstoqueProduto(filtroConsultaEstoque));

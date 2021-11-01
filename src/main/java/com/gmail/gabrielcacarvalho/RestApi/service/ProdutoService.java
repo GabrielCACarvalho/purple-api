@@ -93,6 +93,10 @@ public class ProdutoService {
         return produtoProdutoDTOConverter.from(produtoRepository.save(alteraDTOProdutoConverter.from(alteraProdutoDTO)));
     }
 
+    public void deletaProduto(Integer idProduto) {
+        produtoRepository.delete(produtoRepository.getById(idProduto));
+    }
+
     private Specification<Produto> criarFiltroBuscarLista(FiltroListarProdutos filtroListarProdutos) {
 
         FiltroListarProdutos filtros = Optional.ofNullable(filtroListarProdutos).orElse(new FiltroListarProdutos());
