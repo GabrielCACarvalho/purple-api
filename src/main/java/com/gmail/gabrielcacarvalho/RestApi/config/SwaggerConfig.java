@@ -29,17 +29,15 @@ public class SwaggerConfig {
 
     private ApiInfo metaInfo() {
 
-        ApiInfo apiInfo = new ApiInfo(
+        return new ApiInfo(
                 "Restful API with Spring",
                 "A simple restful spring boot API",
-                "1.0",
+                "1.1",
                 "Terms of Service",
                 new Contact("Gabriel Cardoso", "",
                         "gabrielcacarvalho@gmail.com"),
                 null,
-                null, new ArrayList<VendorExtension>()
+                null, new ArrayList<>()
         );
-
-        return apiInfo;
     }
 }
