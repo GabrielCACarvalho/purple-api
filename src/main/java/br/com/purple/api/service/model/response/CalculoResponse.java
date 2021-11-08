@@ -20,9 +20,9 @@ public class CalculoResponse {
     private String valorAvisoRecebimento;
     @Element(name = "ValorValorDeclarado")
     private String valorValorDeclarado;
-    @Element(name = "EntregaDomiciliar")
+    @Element(name = "EntregaDomiciliar", required = false)
     private String entregaDomiciliar;
-    @Element(name = "EntregaSabado")
+    @Element(name = "EntregaSabado", required = false)
     private String entregaSabado;
     @Element(name = "obsFim", required = false)
     private String obsFim;

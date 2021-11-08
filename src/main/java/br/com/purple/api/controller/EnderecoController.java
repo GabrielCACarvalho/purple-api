@@ -18,8 +18,6 @@ public class EnderecoController {
     @Autowired
     private EnderecoUseCase enderecoUseCase;
 
-    //TODO: Consulta frete de acordo com o CEP
-
     @PostMapping("/novo")
     @ApiOperation("Cadastra um novo endereço e retorna o endereço cadastrado.")
     public ResponseEntity<EnderecoDTO> criaEndereco(@RequestBody EntradaEnderecoDTO entradaEnderecoDTO){

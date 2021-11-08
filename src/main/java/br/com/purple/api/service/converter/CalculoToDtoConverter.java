@@ -14,7 +14,10 @@ public class CalculoToDtoConverter implements Converter<CalculoResponse, Calculo
 
         calculoResponseDto.setValor(new BigDecimal(calculoResponse.getValor().replace(",", ".")));
         calculoResponseDto.setPrazoEntregaEmDias(calculoResponse.getPrazoEntrega());
-
+        if (calculoResponse.getMsgErro() != null) {
+            calculoResponseDto.setCodigoErro(calculoResponse.getErro());
+            calculoResponseDto.setMensagemErro(calculoResponse.getMsgErro());
+        }
         return calculoResponseDto;
     }
 }
