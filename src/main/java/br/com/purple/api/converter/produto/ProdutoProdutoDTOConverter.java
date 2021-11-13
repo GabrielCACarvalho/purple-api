@@ -28,7 +28,7 @@ public class ProdutoProdutoDTOConverter implements Converter<Produto, ProdutoDTO
         produtoDTO.setDescricao(produto.getDescricao());
         produtoDTO.setNome(produto.getNome());
         produtoDTO.setValorUnitario(produto.getValorUnitario());
-        if(produto.getImagens() != null)
+        if(produto.getImagens().size() > 0)
             produtoDTO.setImage(imagemImagemDTOConverter.from(produto.getImagens().get(1)));
         if (produto.getCategoria() != null)
             produtoDTO.setCategoria(CategoriaDTO.valueOf(produto.getCategoria().name()));
