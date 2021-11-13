@@ -89,6 +89,10 @@ public class ProdutoUseCase {
     }
 
     public ProdutoDTO alteraProduto(AlteraProdutoDTO alteraProdutoDTO) {
+        Produto produto = produtoRepository.getById(alteraProdutoDTO.getId());
+
+
+
         return produtoProdutoDTOConverter.from(produtoRepository.save(alteraDTOProdutoConverter.from(alteraProdutoDTO)));
     }
 

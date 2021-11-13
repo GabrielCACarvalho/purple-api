@@ -24,6 +24,8 @@ public class AlteraDTOProdutoConverter implements Converter<AlteraProdutoDTO, Pr
         produto.setMarca(new Marca(alteraProdutoDTO.getIdMarca()));
         produto.setPromocao(new Promocao(alteraProdutoDTO.getIdPromocao()));
 
+        //TODO: Dando nullPointer, pois produto pode ou não ter marca, promoção e TipoVestimenta
+
         return produto;
     }
 }

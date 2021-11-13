@@ -25,14 +25,14 @@ public class ProdutoController {
 
     @PostMapping("/listar")
     @ApiOperation("Retorna produtos de acordo com o filtro.")
-    public ResponseEntity<Page<ProdutoDTO>> obterProdutos(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
-                                                          @RequestBody(required = false) FiltroListarProdutos filtros){
+    public ResponseEntity<Page<ProdutoDTO>> obterProdutos(@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
+                                                          FiltroListarProdutos filtros){
         return ResponseEntity.ok(produtoUseCase.obterProdutos(pageable, filtros));
     }
 
     @GetMapping("/{idProduto}")
     @ApiOperation("Retorna um produto pelo id.")
-    public ResponseEntity<ProdutoDTO> obterProduto(@PathVariable Integer idProduto){
+    public ResponseEntity<ProdutoDTO> obterProduto(@PathVariable Integer idProduto){ //TODO: Trazer primeira imagem
         return ResponseEntity.ok(produtoUseCase.obterProduto(idProduto));
     }
 
