@@ -10,13 +10,11 @@ import br.com.purple.api.core.entity.model.Produto;
 
 public class EstoqueDTOConverter implements Converter<Estoque, EstoqueDTO> {
 
-    private Converter<Produto, ProdutoDTO> produtoDTOConverter = new ProdutoProdutoDTOConverter();
-
     @Override
     public EstoqueDTO from(Estoque estoque) {
         EstoqueDTO estoqueDTO = new EstoqueDTO();
 
-        estoqueDTO.setProduto(produtoDTOConverter.from(estoque.getId().getProduto()));
+        estoqueDTO.setIdProduto(estoque.getId().getProduto().getId());
         estoqueDTO.setTamanho(TamanhoDTO.valueOf(estoque.getId().getTamanho().name()));
         estoqueDTO.setQuantidadeEmEstoque(estoque.getQuantidadeEmEstoque());
 

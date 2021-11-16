@@ -23,6 +23,7 @@ public class Produto implements Serializable {
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
     private BigDecimal valorUnitario;
+    private String path;
     private String cor;
     @OneToMany
     private List<Imagem> imagens;
@@ -45,6 +46,14 @@ public class Produto implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getDescricao() {

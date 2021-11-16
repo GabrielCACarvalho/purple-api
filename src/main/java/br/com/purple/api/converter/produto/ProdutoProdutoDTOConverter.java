@@ -25,19 +25,22 @@ public class ProdutoProdutoDTOConverter implements Converter<Produto, ProdutoDTO
 
         produtoDTO.setId(produto.getId());
         produtoDTO.setCor(produto.getCor());
+        produtoDTO.setPath(produto.getPath());
         produtoDTO.setDescricao(produto.getDescricao());
         produtoDTO.setNome(produto.getNome());
         produtoDTO.setValorUnitario(produto.getValorUnitario());
-        if(produto.getImagens().size() > 0)
-            produtoDTO.setImage(imagemImagemDTOConverter.from(produto.getImagens().get(1)));
+
+        if (produto.getImagens() != null)
+            if(produto.getImagens().size() > 0)
+                produtoDTO.setImage(imagemImagemDTOConverter.from(produto.getImagens().get(1)));
         if (produto.getCategoria() != null)
             produtoDTO.setCategoria(CategoriaDTO.valueOf(produto.getCategoria().name()));
         if (produto.getPromocao() != null)
-            produtoDTO.setPromocao(promocaoDTOConverter.from(produto.getPromocao()));
+            produtoDTO.setIdPromocao(produto.getPromocao().getId());
         if (produto.getMarca() != null)
-            produtoDTO.setMarca(marcaDTOConverter.from(produto.getMarca()));
+            produtoDTO.setIdMarca(produto.getMarca().getId());
         if (produto.getTipoVestimenta() != null)
-            produtoDTO.setTipoVestimenta(tipoVestimentaDTOConverter.from(produto.getTipoVestimenta()));
+            produtoDTO.setIdTipoVestimenta(produto.getTipoVestimenta().getId());
 
         return produtoDTO;
     }

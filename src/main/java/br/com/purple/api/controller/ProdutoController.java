@@ -32,7 +32,7 @@ public class ProdutoController {
 
     @GetMapping("/{idProduto}")
     @ApiOperation("Retorna um produto pelo id.")
-    public ResponseEntity<ProdutoDTO> obterProduto(@PathVariable Integer idProduto){ //TODO: Trazer primeira imagem
+    public ResponseEntity<ProdutoDTO> obterProduto(@PathVariable Integer idProduto){
         return ResponseEntity.ok(produtoUseCase.obterProduto(idProduto));
     }
 
