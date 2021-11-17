@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,7 +50,16 @@ public class ProdutoUseCase {
     }
 
     public ProdutoDTO obterProduto(Integer idProduto) {
-        return produtoProdutoDTOConverter.from(produtoRepository.findById(idProduto).get());
+        Optional<Produto> optionalProduto = produtoRepository.findById(idProduto);
+
+        Produto produto = new Produto();
+
+        if (optionalProduto.isPresent()) {
+            produto = optionalProduto.get();
+        }
+
+
+        return produtoProdutoDTOConverter.from(produto);
     }
 
     public ProdutoDTO criaProduto(EntradaProdutoDTO entradaProdutoDTO) {
@@ -64,7 +74,14 @@ public class ProdutoUseCase {
     }
 
     public ProdutoDTO adicionaImagemProduto(Integer idProduto, MultipartFile[] imagens) {
-        Produto produto = produtoRepository.findById(idProduto).get();
+        Optional<Produto> optionalProduto = produtoRepository.findById(idProduto);
+
+        Produto produto = new Produto();
+
+        if (optionalProduto.isPresent()) {
+            produto = optionalProduto.get();
+        }
+
 
         List<Imagem> imgs = Arrays
                 .stream(imagens)
@@ -89,15 +106,33 @@ public class ProdutoUseCase {
     }
 
     public ProdutoDTO alteraProduto(AlteraProdutoDTO alteraProdutoDTO) {
-        Produto produto = produtoRepository.getById(alteraProdutoDTO.getId());
 
+        Optional<Produto> optionalProduto = produtoRepository.findById(alteraProdutoDTO.getId());
 
+        Produto produto = new Produto();
 
-        return produtoProdutoDTOConverter.from(produtoRepository.save(alteraDTOProdutoConverter.from(alteraProdutoDTO)));
+        if (optionalProduto.isPresent()) {
+            produto = optionalProduto.get();
+        }
+
+        Produto alteracaoProduto = alteraDTOProdutoConverter.from(alteraProdutoDTO);
+
+        alteracaoProduto.setPath(produto.getPath());
+
+        return produtoProdutoDTOConverter.from(produtoRepository.save(alteracaoProduto));
     }
 
     public void deletaProduto(Integer idProduto) {
-        produtoRepository.delete(produtoRepository.getById(idProduto));
+        imagemRepository.deleteByProdutoId(idProduto);
+
+        Optional<Produto> optionalProduto = produtoRepository.findById(idProduto);
+
+        Produto produto = new Produto();
+        if (optionalProduto.isPresent()){
+            produto = optionalProduto.get();
+        }
+
+        produtoRepository.delete(produto);
     }
 
     private Specification<Produto> criarFiltroBuscarLista(FiltroListarProdutos filtroListarProdutos) {

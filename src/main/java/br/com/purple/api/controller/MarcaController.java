@@ -24,7 +24,7 @@ public class MarcaController {
 
     @GetMapping("/listar")
     @ApiOperation("Retorna as marcas cadastradas de acordo com o filtro.")
-    public ResponseEntity<Page<MarcaDTO>> obterMarcas(@PageableDefault(size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+    public ResponseEntity<Page<MarcaDTO>> obterMarcas(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
         return ResponseEntity.ok(marcaUseCase.obterMarcas(pageable));
     }
 

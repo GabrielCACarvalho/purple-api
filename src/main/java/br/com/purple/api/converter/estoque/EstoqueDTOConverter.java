@@ -14,8 +14,10 @@ public class EstoqueDTOConverter implements Converter<Estoque, EstoqueDTO> {
     public EstoqueDTO from(Estoque estoque) {
         EstoqueDTO estoqueDTO = new EstoqueDTO();
 
-        estoqueDTO.setIdProduto(estoque.getId().getProduto().getId());
-        estoqueDTO.setTamanho(TamanhoDTO.valueOf(estoque.getId().getTamanho().name()));
+        if (estoque.getId() != null) {
+            estoqueDTO.setIdProduto(estoque.getId().getProduto().getId());
+            estoqueDTO.setTamanho(TamanhoDTO.valueOf(estoque.getId().getTamanho().name()));
+        }
         estoqueDTO.setQuantidadeEmEstoque(estoque.getQuantidadeEmEstoque());
 
         return estoqueDTO;

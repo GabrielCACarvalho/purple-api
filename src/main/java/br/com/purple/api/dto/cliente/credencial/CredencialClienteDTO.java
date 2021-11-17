@@ -1,14 +1,14 @@
 package br.com.purple.api.dto.cliente.credencial;
 
-import br.com.purple.api.core.entity.model.Role;
+import br.com.purple.api.dto.cliente.credencial.role.RoleDTO;
 import lombok.Data;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 @Data
 public class CredencialClienteDTO {
     private String usuario;
     private String senha;
-    private Collection<Role> roles = new ArrayList<>();
+    private List<RoleDTO> roles = new ArrayList<>();
 }

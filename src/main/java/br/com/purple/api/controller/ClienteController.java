@@ -25,8 +25,8 @@ public class ClienteController {
 
     @GetMapping("/listar")
     @ApiOperation(value = "Retorna Clientes de acordo com o filtro.")
-    public ResponseEntity<Page<ClienteDTO>> obterClientes(@PageableDefault(size = 1, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
-                                                          @RequestBody(required = false) FiltroListarClientes filtros){
+    public ResponseEntity<Page<ClienteDTO>> obterClientes(@PageableDefault(size = 100, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+                                                          FiltroListarClientes filtros){
         return ResponseEntity.ok(clienteUseCase.obterClientes(pageable, filtros));
     }
 
@@ -37,7 +37,7 @@ public class ClienteController {
     }
 
     @PutMapping("/altera")
-    @ApiOperation(value = "")
+    @ApiOperation(value = "Altera um cliente existente.")
     public ResponseEntity<ClienteDTO> alteraCliente(@RequestBody AlteraClienteDTO alteraClienteDTO){
         return ResponseEntity.ok(clienteUseCase.alteraCliente(alteraClienteDTO));
     }

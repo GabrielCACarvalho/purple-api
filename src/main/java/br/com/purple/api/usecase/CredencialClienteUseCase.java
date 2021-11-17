@@ -3,6 +3,7 @@ package br.com.purple.api.usecase;
 import br.com.purple.api.converter.Converter;
 import br.com.purple.api.converter.cliente.credencial.CredencialCredencialDTOConverter;
 import br.com.purple.api.converter.cliente.credencial.CredencialDTOCredencialConverter;
+import br.com.purple.api.converter.cliente.credencial.role.RoleDtoRoleConverter;
 import br.com.purple.api.core.entity.model.CredencialCliente;
 import br.com.purple.api.core.entity.model.Role;
 import br.com.purple.api.dto.cliente.credencial.AlteraCredencialClienteDTO;
@@ -72,7 +73,9 @@ public class CredencialClienteUseCase implements UserDetailsService {
     }
 
     public Page<RoleDTO> obterRoles(Pageable pageable) {
-        return roleRoleDTOConverter.from(roleRepository.findAll(pageable));
+        Page<Role> roles = roleRepository.findAll(pageable);
+
+        return roleRoleDTOConverter.from(roles);
     }
 
     public void deleteRole(Integer idRole) {

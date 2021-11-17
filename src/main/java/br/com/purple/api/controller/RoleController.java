@@ -27,7 +27,7 @@ public class RoleController {
 
     @GetMapping("/listar")
     @ApiOperation("Retorna as roles cadastradas.")
-    public ResponseEntity<Page<RoleDTO>> obterRoles(@PageableDefault(size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+    public ResponseEntity<Page<RoleDTO>> obterRoles(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
         return ResponseEntity.ok(credencialClienteUseCase.obterRoles(pageable));
     }
 

@@ -1,6 +1,7 @@
 package br.com.purple.api.usecase;
 
 import br.com.purple.api.core.entity.model.EstoquePK;
+import br.com.purple.api.core.entity.model.Produto;
 import br.com.purple.api.dto.produto.EntradaEstoque;
 import br.com.purple.api.repositories.EstoqueRepository;
 import br.com.purple.api.converter.Converter;
@@ -73,7 +74,15 @@ public class EstoqueUseCase {
     private EstoquePK criaEstoquePK(EntradaEstoque entradaEstoque) {
         EstoquePK estoquePK = new EstoquePK();
 
-        estoquePK.setProduto(produtoRepository.getById(entradaEstoque.getIdProduto()));
+        Optional<Produto> optionalProduto = produtoRepository.findById(entradaEstoque.getIdProduto());
+
+        Produto produto = new Produto();
+
+        if (optionalProduto.isPresent()){
+            produto = optionalProduto.get();
+        }
+
+        estoquePK.setProduto(produto);
         estoquePK.setTamanho(entradaEstoque.getTamanho());
 
         return estoquePK;

@@ -9,8 +9,8 @@ public class RoleRoleDTOConverter implements Converter<Role, RoleDTO> {
     public RoleDTO from(Role role) {
         RoleDTO roleDTO = new RoleDTO();
 
-        role.setId(role.getId());
-        role.setNome(role.getNome());
+        roleDTO.setId(role.getId());
+        roleDTO.setNome(role.getNome());
 
         return roleDTO;
     }

@@ -19,9 +19,9 @@ public class EstoqueController {
     @Autowired
     private EstoqueUseCase estoqueUseCase;
 
-    @PostMapping
+    @GetMapping
     @ApiOperation("Consulta o estoque de um produto")
-    public ResponseEntity<EstoqueDTO> consultaEstoque(@RequestBody FiltroConsultaEstoque filtroConsultaEstoque){
+    public ResponseEntity<EstoqueDTO> consultaEstoque(FiltroConsultaEstoque filtroConsultaEstoque){
         return ResponseEntity.ok(estoqueUseCase.consultaEstoqueProduto(filtroConsultaEstoque));
     }
 

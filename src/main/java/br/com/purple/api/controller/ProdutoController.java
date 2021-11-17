@@ -23,10 +23,10 @@ public class ProdutoController {
     @Autowired
     private ProdutoUseCase produtoUseCase;
 
-    @PostMapping("/listar")
+    @GetMapping("/listar")
     @ApiOperation("Retorna produtos de acordo com o filtro.")
-    public ResponseEntity<Page<ProdutoDTO>> obterProdutos(@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
-                                                          FiltroListarProdutos filtros){
+    public ResponseEntity<Page<ProdutoDTO>> obterProdutos(FiltroListarProdutos filtros,
+                                                          @PageableDefault(size = 50, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
         return ResponseEntity.ok(produtoUseCase.obterProdutos(pageable, filtros));
     }
 

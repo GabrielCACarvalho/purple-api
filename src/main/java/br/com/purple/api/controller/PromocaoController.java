@@ -25,10 +25,10 @@ public class PromocaoController {
     @Autowired
     private PromocaoUseCase promocaoUseCase;
 
-    @PostMapping("/listar")
+    @GetMapping("/listar")
     @ApiOperation("Retorna promoções de acordo com o filtro. Date pattern = yyyy-MM-dd")
-    public ResponseEntity<Page<PromocaoDTO>> obterPromocoes(@PageableDefault(size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                                                            @Valid @RequestBody(required = false) FiltroListarPromocoes filtros){
+    public ResponseEntity<Page<PromocaoDTO>> obterPromocoes(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                                                            @Valid FiltroListarPromocoes filtros){
         return ResponseEntity.ok(promocaoUseCase.obterPromocoes(pageable, filtros));
     }
 

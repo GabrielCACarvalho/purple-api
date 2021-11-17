@@ -35,7 +35,7 @@ public class ClienteCredencialController {
     }
 
     @PostMapping("/adicionar/role/credencial")
-    @ApiOperation(value = "Cria uma nova credencial cliente.")
+    @ApiOperation(value = "Adiciona uma nova permissão na credencial do usuário.")
     public ResponseEntity<?> addRoleToCredencial(@RequestBody RoleToCredentialDTO roleToCredentialDTO){
         credencialClienteUseCase.addRoleToCredencial(roleToCredentialDTO.getUsuario(), roleToCredentialDTO.getNomeRole());
         return ResponseEntity.ok().build();

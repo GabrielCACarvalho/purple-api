@@ -14,9 +14,6 @@ import br.com.purple.api.converter.marca.MarcaMarcaDTOConverter;
 
 public class ProdutoProdutoDTOConverter implements Converter<Produto, ProdutoDTO> {
 
-    private Converter<Promocao, PromocaoDTO> promocaoDTOConverter = new PromocaoPromocaoDTOConverter();
-    private Converter<Marca, MarcaDTO> marcaDTOConverter = new MarcaMarcaDTOConverter();
-    private Converter<TipoVestimenta, TipoVestimentaDTO> tipoVestimentaDTOConverter = new TipoVestimentaTipoVestimentaDTOConverter();
     private Converter<Imagem, ImagemDTO> imagemImagemDTOConverter = new ImagemImagemDTOConverter();
 
     @Override
