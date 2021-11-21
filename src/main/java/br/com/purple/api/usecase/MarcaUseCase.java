@@ -41,4 +41,8 @@ public class MarcaUseCase {
     public void deletaMarca(Integer idMarca) {
         marcaRepository.delete(marcaRepository.getById(idMarca));
     }
+
+    public MarcaDTO obterMarca(Integer idMarca) {
+        return marcaMarcaDTOConverter.from(marcaRepository.getById(idMarca));
+    }
 }

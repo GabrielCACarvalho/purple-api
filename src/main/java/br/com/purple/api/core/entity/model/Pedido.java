@@ -26,6 +26,7 @@ public class Pedido {
     @OneToMany
     private List<Item> itens;
     private BigDecimal valorTotal;
+    private Boolean aberto;
 
     public Integer getId() {
         return id;
@@ -33,6 +34,14 @@ public class Pedido {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Boolean getAberto() {
+        return aberto;
+    }
+
+    public void setAberto(Boolean aberto) {
+        this.aberto = aberto;
     }
 
     public StatusPedido getStatus() {

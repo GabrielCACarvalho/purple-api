@@ -41,4 +41,8 @@ public class TipoVestimentaUseCase {
     public void deletaTipoVestimenta(Integer idTipoVestimenta) {
         tipoVestimentaRepository.delete(tipoVestimentaRepository.getById(idTipoVestimenta));
     }
+
+    public TipoVestimentaDTO obterTipoVestimenta(Integer idTipoVestimenta) {
+        return tipoVestimentaTipoVestimentaDTOConverter.from(tipoVestimentaRepository.getById(idTipoVestimenta));
+    }
 }

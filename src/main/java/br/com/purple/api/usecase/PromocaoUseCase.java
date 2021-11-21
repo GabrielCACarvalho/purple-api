@@ -64,4 +64,9 @@ public class PromocaoUseCase {
             return builder.and(predicates.toArray(new Predicate[0]));
         };
     }
+
+    public PromocaoDTO obterPromocao(Integer idPromocao) {
+
+        return promocaoPromocaoDTOConverter.from(promocaoRepository.getById(idPromocao));
+    }
 }

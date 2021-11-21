@@ -5,7 +5,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity

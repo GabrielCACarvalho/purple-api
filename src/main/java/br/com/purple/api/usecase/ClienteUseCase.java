@@ -38,10 +38,7 @@ public class ClienteUseCase {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    private EntradaDTOClienteConverter entradaDTOClienteConverter = new EntradaDTOClienteConverter();
     private ClienteClienteDTOConverter clienteClienteDTOConverter = new ClienteClienteDTOConverter();
-    private EntradaDTOEnderecoConverter entradaDTOEnderecoConverter = new EntradaDTOEnderecoConverter();
-    private AlteraDTOClienteConverter alteraDTOClienteConverter = new AlteraDTOClienteConverter();
 
     public Page<ClienteDTO> obterClientes(Pageable pageable, FiltroListarClientes filtros){
         return clienteClienteDTOConverter.from(clienteRepository.findAll(criarFiltrosBuscarLista(filtros), pageable));

@@ -22,6 +22,12 @@ public class MarcaController {
     @Autowired
     private MarcaUseCase marcaUseCase;
 
+    @GetMapping("/{idMarca}")
+    @ApiOperation("Retorna a marca pelo id.")
+    public ResponseEntity<MarcaDTO> obterMarca(@PathVariable Integer idMarca){
+        return ResponseEntity.ok(marcaUseCase.obterMarca(idMarca));
+    }
+
     @GetMapping("/listar")
     @ApiOperation("Retorna as marcas cadastradas de acordo com o filtro.")
     public ResponseEntity<Page<MarcaDTO>> obterMarcas(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){

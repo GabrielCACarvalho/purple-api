@@ -22,6 +22,12 @@ public class TipoVestimentaController {
     @Autowired
     private TipoVestimentaUseCase tipoVestimentaUseCase;
 
+    @GetMapping("/{idTipoVestimenta}")
+    @ApiOperation("Retorna o tipo vestimenta pelo id.")
+    public ResponseEntity<TipoVestimentaDTO> obterTipoVestimenta(@PathVariable Integer idTipoVestimenta){
+        return ResponseEntity.ok(tipoVestimentaUseCase.obterTipoVestimenta(idTipoVestimenta));
+    }
+
     @GetMapping("/listar")
     @ApiOperation("Retorna tipos de vestimenta de acordo com o filtro.")
     public ResponseEntity<Page<TipoVestimentaDTO>> obterTiposVestimenta(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){

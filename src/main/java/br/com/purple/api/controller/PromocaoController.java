@@ -25,6 +25,12 @@ public class PromocaoController {
     @Autowired
     private PromocaoUseCase promocaoUseCase;
 
+    @GetMapping("/{idPromocao}")
+    @ApiOperation("Retorna promoção pelo id.")
+    public ResponseEntity<PromocaoDTO> obterPromocao(@PathVariable Integer idPromocao){
+        return ResponseEntity.ok(promocaoUseCase.obterPromocao(idPromocao));
+    }
+
     @GetMapping("/listar")
     @ApiOperation("Retorna promoções de acordo com o filtro. Date pattern = yyyy-MM-dd")
     public ResponseEntity<Page<PromocaoDTO>> obterPromocoes(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
