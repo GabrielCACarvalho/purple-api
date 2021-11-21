@@ -4,6 +4,7 @@ import br.com.purple.api.config.security.util.ClienteAutenticadoUtil;
 import br.com.purple.api.converter.Converter;
 import br.com.purple.api.converter.pedido.PedidoFinalizadoDTOConverter;
 import br.com.purple.api.converter.pedido.PedidoPedidoDTOConverter;
+import br.com.purple.api.core.entity.enumerator.StatusPedido;
 import br.com.purple.api.core.entity.enumerator.Tamanho;
 import br.com.purple.api.core.entity.model.*;
 import br.com.purple.api.dto.pedido.FinalizaPedidoDTO;
@@ -11,6 +12,9 @@ import br.com.purple.api.dto.pedido.PedidoDTO;
 import br.com.purple.api.dto.pedido.PedidoFinalizadoDTO;
 import br.com.purple.api.dto.pedido.item.EntradaItemDTO;
 import br.com.purple.api.repositories.*;
+import br.com.purple.api.service.CalcPrecoPrazoClient;
+import br.com.purple.api.service.model.FiltroCalculoPrecoPrazoProduto;
+import br.com.purple.api.service.model.dto.CalculoResponseDto;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +45,9 @@ public class PedidoUseCase {
 
     @Autowired
     private EstoqueRepository estoqueRepository;
+
+    @Autowired
+    private CalcPrecoPrazoClient calcPrecoPrazoClient;
 
     private Converter<Pedido, PedidoDTO> pedidoPedidoDTOConverter = new PedidoPedidoDTOConverter();
 
@@ -73,10 +80,12 @@ public class PedidoUseCase {
     public PedidoDTO addItem(EntradaItemDTO entradaItemDTO) {
         Optional<Pedido> optionalPedido = pedidoRepository.findByAbertoAndClienteCredencialClienteUsuario(true, ClienteAutenticadoUtil.getUsuarioClienteAutenticado());
 
-        Pedido pedido = new Pedido();
+        Pedido pedido;
 
         if (optionalPedido.isPresent()){
             pedido = optionalPedido.get();
+        } else {
+            throw new RuntimeException("Não foi possivel adicionar, pois o pedido não existe.");
         }
 
         pedido.getItens().add(criaItem(entradaItemDTO));
@@ -85,8 +94,6 @@ public class PedidoUseCase {
     }
 
     public PedidoFinalizadoDTO finalizaPedido(FinalizaPedidoDTO finalizaPedidoDTO) {
-        //TODO: Somar o valor do frete com o valor total, setar um CEP da empresa, e utilizar o CEP do endereço
-
         Cliente cliente = clienteRepository.findByCredencialClienteUsuario(ClienteAutenticadoUtil.getUsuarioClienteAutenticado());
 
         if (cliente.getEndereco() == null)
@@ -102,15 +109,35 @@ public class PedidoUseCase {
             throw new RuntimeException("Não há pedido aberto para esse usuário.");
         }
 
-        pedido.setValorTotal(getValorTotalPedido(pedido.getItens()));
+        pedido.setValorTotal(getValorTotalPedidoComEntrega(finalizaPedidoDTO.getServicoEnvio(), pedido));
         pedido.setDataEnvio(finalizaPedidoDTO.getDataEnvio());
         pedido.setDataPagamento(finalizaPedidoDTO.getDataPagamento());
         pedido.setFormaPagamento(finalizaPedidoDTO.getFormaPagamento());
+        pedido.setStatus(StatusPedido.SOLICITADO);
         pedido.setAberto(false);
 
         verificaEstoqueProdutos(pedido);
 
         return pedidoFinalizadoDTOConverter.from(pedidoRepository.save(pedido));
+    }
+
+    private BigDecimal getValorTotalPedidoComEntrega(String servicoEnvio, Pedido pedido) {
+        Cliente cliente = clienteRepository.findByCredencialClienteUsuario(ClienteAutenticadoUtil.getUsuarioClienteAutenticado());
+
+        FiltroCalculoPrecoPrazoProduto filtro = new FiltroCalculoPrecoPrazoProduto();
+
+        filtro.setCodigoServico(servicoEnvio);
+        filtro.setCepDestino(cliente.getEndereco().getCep());
+        filtro.setAltura(BigDecimal.valueOf(15));
+        filtro.setComprimento(BigDecimal.valueOf(30));
+        filtro.setPeso(BigDecimal.valueOf(1.5));
+        filtro.setLargura(BigDecimal.valueOf(20));
+
+        CalculoResponseDto calculoResponseDto = calcPrecoPrazoClient.getCalculo(filtro);
+
+        BigDecimal valorTotal = getValorTotalPedido(pedido.getItens());
+
+        return valorTotal.add(calculoResponseDto.getValor());
     }
 
 
@@ -121,7 +148,9 @@ public class PedidoUseCase {
 
         if (optionalPedido.isPresent()){
             pedido = optionalPedido.get();
+
             pedidoRepository.delete(pedido);
+            pedido.getItens().forEach( item -> itemRepository.delete(item));
         }
     }
 
@@ -169,13 +198,30 @@ public class PedidoUseCase {
         Estoque estoque = estoqueRepository.getByIdProdutoIdAndIdTamanho(item.getProduto().getId(), item.getTamanho());
 
         if (estoque == null)
-            throw new RuntimeException("Esse produto não tem estoque.");
+            throw new RuntimeException("O produto de ID: " + item.getProduto().getId() + " não tem estoque.");
 
         if (estoque.getQuantidadeEmEstoque() < item.getQuantidade())
-            throw new RuntimeException("Esse produto não possui essa quantidade em estoque.");
+            throw new RuntimeException("O produto de ID: " + item.getProduto().getId() + " não possui essa quantidade em estoque.");
 
         estoque.setQuantidadeEmEstoque(estoque.getQuantidadeEmEstoque() - item.getQuantidade());
 
         estoqueRepository.save(estoque);
+    }
+
+    public PedidoDTO retiraItem(Integer idItem) {
+        Optional<Pedido> optionalPedido = pedidoRepository.findByAbertoAndClienteCredencialClienteUsuario(true, ClienteAutenticadoUtil.getUsuarioClienteAutenticado());
+
+        Pedido pedido;
+
+        if (optionalPedido.isPresent()){
+            pedido = optionalPedido.get();
+        } else {
+            throw new RuntimeException("Não foi possivel retirar, pois o pedido não existe.");
+        }
+
+        pedido.getItens().remove(itemRepository.getById(idItem));
+        itemRepository.deleteById(idItem);
+
+        return pedidoPedidoDTOConverter.from(pedidoRepository.save(pedido));
     }
 }

@@ -31,6 +31,12 @@ public class PedidoController {
         return ResponseEntity.ok(pedidoUseCase.addItem(entradaItemDTO));
     }
 
+    @PutMapping("/retirar/item")
+    @ApiOperation("Retira um item do pedido aberto do cliente autenticado.")
+    public ResponseEntity<PedidoDTO> retiraItem(@RequestParam Integer idItem){
+        return ResponseEntity.ok(pedidoUseCase.retiraItem(idItem));
+    }
+
     @PutMapping("/finaliza")
     @ApiOperation("Finaliza o pedido aberto do cliente autenticado.")
     public ResponseEntity<PedidoFinalizadoDTO> encerraPedido(@RequestBody FinalizaPedidoDTO finalizaPedidoDTO){

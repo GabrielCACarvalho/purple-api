@@ -24,13 +24,6 @@ public class FiltroCalculoPrecoPrazoProduto {
     @NotNull
     @NotBlank
     @ApiModelProperty(
-            example = "05311900"
-    )
-    private String cepOrigem;
-
-    @NotNull
-    @NotBlank
-    @ApiModelProperty(
             example = "\"14031210\""
     )
     private String cepDestino;

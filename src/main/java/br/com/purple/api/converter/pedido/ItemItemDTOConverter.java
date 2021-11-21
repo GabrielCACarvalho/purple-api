@@ -13,7 +13,7 @@ public class ItemItemDTOConverter implements Converter<Item, ItemDTO> {
 
         itemDTO.setId(item.getId());
         itemDTO.setIdProduto(item.getProduto().getId());
-        itemDTO.setQuantidade(itemDTO.getQuantidade());
+        itemDTO.setQuantidade(item.getQuantidade());
         itemDTO.setValorTotal(item.getValorTotal());
         itemDTO.setId(itemDTO.getId());
         itemDTO.setTamanhoDTO(TamanhoDTO.valueOf(item.getTamanho().name()));

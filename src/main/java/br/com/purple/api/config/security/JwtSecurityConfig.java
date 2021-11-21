@@ -39,6 +39,12 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**"
     };
 
+    //MÉTODOS QUE NÃO PRECISAM DE AUTENTICAÇÃO
+    private static final String[] PUBLIC_MATCHES = {
+            "/correio/calcula/preco/prazo",
+            "/correio/consulta/cep/{cep}"
+    };
+
     //MÉTODOS PARA FAZER AUTENTICAÇÃO
     private static final String[] PUBLIC_MATCHES_AUTH = {
             "/login",
@@ -57,9 +63,10 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers(PUBLIC_MATCHER_SWAGGER).permitAll();
+        http.authorizeRequests().antMatchers(PUBLIC_MATCHES).permitAll();
         http.authorizeRequests().antMatchers(PUBLIC_MATCHES_AUTH).permitAll();
-        //http.authorizeRequests().anyRequest().authenticated();
-        http.authorizeRequests().anyRequest().permitAll();
+        http.authorizeRequests().anyRequest().authenticated();
+        //http.authorizeRequests().anyRequest().permitAll();
 
         http.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtUtil));
         http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);

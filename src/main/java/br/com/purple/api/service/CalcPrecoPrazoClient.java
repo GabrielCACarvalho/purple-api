@@ -12,6 +12,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,9 +22,12 @@ public class CalcPrecoPrazoClient {
 
     private final Converter<CalculoResponse, CalculoResponseDto> calculoToDtoConverter = new CalculoToDtoConverter();
 
+    @Value("${empresa.cep}")
+    private String empresaCEP;
+
     public CalculoResponseDto getCalculo(FiltroCalculoPrecoPrazoProduto filtro){
 
-        String params = "sCepOrigem=" + filtro.getCepOrigem() +
+        String params = "sCepOrigem=" + empresaCEP +
                 "&sCepDestino=" + filtro.getCepDestino() +
                 "&nVlPeso=" + filtro.getPeso() +
                 "&nVlComprimento=" + filtro.getComprimento() +
