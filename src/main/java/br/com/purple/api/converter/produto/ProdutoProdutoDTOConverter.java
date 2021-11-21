@@ -12,6 +12,8 @@ import br.com.purple.api.dto.promocao.PromocaoDTO;
 import br.com.purple.api.dto.tipovestimenta.TipoVestimentaDTO;
 import br.com.purple.api.converter.marca.MarcaMarcaDTOConverter;
 
+import java.math.BigDecimal;
+
 public class ProdutoProdutoDTOConverter implements Converter<Produto, ProdutoDTO> {
 
     private Converter<Imagem, ImagemDTO> imagemImagemDTOConverter = new ImagemImagemDTOConverter();
@@ -32,8 +34,15 @@ public class ProdutoProdutoDTOConverter implements Converter<Produto, ProdutoDTO
                 produtoDTO.setImage(imagemImagemDTOConverter.from(produto.getImagens().get(1)));
         if (produto.getCategoria() != null)
             produtoDTO.setCategoria(CategoriaDTO.valueOf(produto.getCategoria().name()));
-        if (produto.getPromocao() != null)
+        if (produto.getPromocao() != null) {
             produtoDTO.setIdPromocao(produto.getPromocao().getId());
+
+            double valorTotal = produto.getValorUnitario().doubleValue();
+
+            double valorTotalComDesconto = valorTotal - valorTotal * produto.getPromocao().getPorcentagemDesconto().doubleValue() / 100;
+
+            produtoDTO.setValorUnitarioDesconto(BigDecimal.valueOf(valorTotalComDesconto));
+        }
         if (produto.getMarca() != null)
             produtoDTO.setIdMarca(produto.getMarca().getId());
         if (produto.getTipoVestimenta() != null)

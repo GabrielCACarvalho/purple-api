@@ -52,12 +52,13 @@ public class ProdutoUseCase {
     public ProdutoDTO obterProduto(Integer idProduto) {
         Optional<Produto> optionalProduto = produtoRepository.findById(idProduto);
 
-        Produto produto = new Produto();
+        Produto produto;
 
         if (optionalProduto.isPresent()) {
             produto = optionalProduto.get();
+        } else {
+            throw new RuntimeException("Produto não existe.");
         }
-
 
         return produtoProdutoDTOConverter.from(produto);
     }

@@ -16,6 +16,7 @@ public class ProdutoDTO {
     private CategoriaDTO categoria;
     private ImagemDTO image;
     private BigDecimal valorUnitario;
+    private BigDecimal valorUnitarioDesconto;
     private String cor;
     private Integer idPromocao;
     private Integer idTipoVestimenta;

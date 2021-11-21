@@ -65,8 +65,8 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(PUBLIC_MATCHER_SWAGGER).permitAll();
         http.authorizeRequests().antMatchers(PUBLIC_MATCHES).permitAll();
         http.authorizeRequests().antMatchers(PUBLIC_MATCHES_AUTH).permitAll();
-        http.authorizeRequests().anyRequest().authenticated();
-        //http.authorizeRequests().anyRequest().permitAll();
+        //http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().anyRequest().permitAll();
 
         http.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtUtil));
         http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
