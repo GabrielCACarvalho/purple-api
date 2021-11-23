@@ -9,6 +9,6 @@ import java.util.Date;
 @FiltroListarPromocoesValido
 public class FiltroListarPromocoes {
 
-    private Date dataInicio;
-    private Date dataFim;
+    private String dataInicio;
+    private String dataFim;
 }

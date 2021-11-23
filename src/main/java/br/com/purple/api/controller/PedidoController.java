@@ -1,5 +1,6 @@
 package br.com.purple.api.controller;
 
+import br.com.purple.api.dto.pedido.FiltroTotalPedidos;
 import br.com.purple.api.dto.pedido.FinalizaPedidoDTO;
 import br.com.purple.api.dto.pedido.PedidoDTO;
 import br.com.purple.api.dto.pedido.PedidoFinalizadoDTO;
@@ -19,11 +20,11 @@ public class PedidoController {
     @Autowired
     private PedidoUseCase pedidoUseCase;
 
-    /*@GetMapping("/total")
+    @GetMapping("/total")
     @ApiOperation("Consulta o total de pedidos finalizados.")
-    public ResponseEntity<Integer> totalPedidos(FiltroTotalPedidos filtro){
-        return ResponseEntity.ok(pedidoUseCase.);
-    }*/
+    public ResponseEntity<Long> totalPedidos(FiltroTotalPedidos filtro){
+        return ResponseEntity.ok(pedidoUseCase.obterTotalPedidos(filtro));
+    }
 
     @PostMapping("/novo")
     @ApiOperation("Abre um novo pedido ou 'Carrinho'.")

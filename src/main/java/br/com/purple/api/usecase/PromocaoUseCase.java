@@ -17,6 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.Predicate;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,8 +59,8 @@ public class PromocaoUseCase {
 
             if (filtros.getDataFim() != null && filtros.getDataInicio() != null)
                 predicates.add(builder.between(root.get("dataInicio"),
-                        filtros.getDataInicio(),
-                        filtros.getDataFim()));
+                        Date.valueOf(filtros.getDataInicio()),
+                        Date.valueOf(filtros.getDataFim())));
 
             return builder.and(predicates.toArray(new Predicate[0]));
         };

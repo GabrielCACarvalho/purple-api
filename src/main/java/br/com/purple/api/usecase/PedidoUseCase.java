@@ -7,6 +7,7 @@ import br.com.purple.api.converter.pedido.PedidoPedidoDTOConverter;
 import br.com.purple.api.core.entity.enumerator.StatusPedido;
 import br.com.purple.api.core.entity.enumerator.Tamanho;
 import br.com.purple.api.core.entity.model.*;
+import br.com.purple.api.dto.pedido.FiltroTotalPedidos;
 import br.com.purple.api.dto.pedido.FinalizaPedidoDTO;
 import br.com.purple.api.dto.pedido.PedidoDTO;
 import br.com.purple.api.dto.pedido.PedidoFinalizadoDTO;
@@ -15,14 +16,16 @@ import br.com.purple.api.repositories.*;
 import br.com.purple.api.service.CalcPrecoPrazoClient;
 import br.com.purple.api.service.model.FiltroCalculoPrecoPrazoProduto;
 import br.com.purple.api.service.model.dto.CalculoResponseDto;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -223,5 +226,24 @@ public class PedidoUseCase {
         itemRepository.deleteById(idItem);
 
         return pedidoPedidoDTOConverter.from(pedidoRepository.save(pedido));
+    }
+
+    public Long obterTotalPedidos(FiltroTotalPedidos filtro) {
+        return pedidoRepository.count(criarFiltroContagem(filtro));
+    }
+
+    private Specification<Pedido> criarFiltroContagem(FiltroTotalPedidos filtro) {
+        FiltroTotalPedidos filtros = Optional.ofNullable(filtro).orElse(new FiltroTotalPedidos());
+
+        return (root, query, builder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (filtros.getDataFim() != null && filtros.getDataInicio() != null)
+                predicates.add(builder.between(root.get("dataCriacao"),
+                        Date.valueOf(filtros.getDataInicio()),
+                        Date.valueOf(filtros.getDataFim())));
+
+            return builder.and(predicates.toArray(new Predicate[0]));
+        };
     }
 }

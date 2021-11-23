@@ -4,6 +4,8 @@ import br.com.purple.api.core.entity.model.Cliente;
 import br.com.purple.api.dto.cliente.AlteraClienteDTO;
 import br.com.purple.api.dto.cliente.ClienteDTO;
 import br.com.purple.api.dto.cliente.FiltroListarClientes;
+import br.com.purple.api.dto.cliente.FiltroTotalClientes;
+import br.com.purple.api.dto.pedido.FiltroTotalPedidos;
 import br.com.purple.api.usecase.ClienteUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +24,12 @@ public class ClienteController {
 
     @Autowired
     private ClienteUseCase clienteUseCase;
+
+    @GetMapping("/total")
+    @ApiOperation("Consulta o total de pedidos finalizados.")
+    public ResponseEntity<Long> totalClientes(FiltroTotalClientes filtro){
+        return ResponseEntity.ok(clienteUseCase.obterTotalClientes(filtro));
+    }
 
     @GetMapping("/listar")
     @ApiOperation(value = "Retorna Clientes de acordo com o filtro.")
