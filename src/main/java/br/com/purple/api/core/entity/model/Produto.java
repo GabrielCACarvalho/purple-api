@@ -17,6 +17,7 @@ public class Produto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+    @Column(length = 5000)
     private String descricao;
     @ManyToOne
     private Marca marca;

@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 public class EstoqueDTO {
 
-    private Integer idProduto;
     private TamanhoDTO tamanho;
     private Integer quantidadeEmEstoque;
 }

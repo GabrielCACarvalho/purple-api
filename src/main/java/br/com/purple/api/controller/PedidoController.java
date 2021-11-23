@@ -19,6 +19,12 @@ public class PedidoController {
     @Autowired
     private PedidoUseCase pedidoUseCase;
 
+    /*@GetMapping("/total")
+    @ApiOperation("Consulta o total de pedidos finalizados.")
+    public ResponseEntity<Integer> totalPedidos(FiltroTotalPedidos filtro){
+        return ResponseEntity.ok(pedidoUseCase.);
+    }*/
+
     @PostMapping("/novo")
     @ApiOperation("Abre um novo pedido ou 'Carrinho'.")
     public ResponseEntity<PedidoDTO> criaPedido(@RequestBody EntradaItemDTO entradaItemDTO){

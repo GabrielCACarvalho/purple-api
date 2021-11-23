@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/estoque")
 @Api(tags = "Estoque")
@@ -23,6 +25,12 @@ public class EstoqueController {
     @ApiOperation("Consulta o estoque de um produto")
     public ResponseEntity<EstoqueDTO> consultaEstoque(FiltroConsultaEstoque filtroConsultaEstoque){
         return ResponseEntity.ok(estoqueUseCase.consultaEstoqueProduto(filtroConsultaEstoque));
+    }
+
+    @GetMapping("/{idProduto}")
+    @ApiOperation("Consulta o estoque de um produto")
+    public ResponseEntity<List<EstoqueDTO>> consultaEstoque(@PathVariable Integer idProduto){
+        return ResponseEntity.ok(estoqueUseCase.consultaEstoqueProduto(idProduto));
     }
 
     @PostMapping("/entrada")

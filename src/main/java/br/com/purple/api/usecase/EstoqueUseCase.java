@@ -14,6 +14,7 @@ import br.com.purple.api.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +32,11 @@ public class EstoqueUseCase {
         return estoqueDTOConverter.from(Optional.ofNullable(estoqueRepository
                 .getByIdProdutoIdAndIdTamanho(filtroConsultaEstoque.getIdProduto(),
                         filtroConsultaEstoque.getTamanho())).orElse(new Estoque()));
+    }
+
+    public List<EstoqueDTO> consultaEstoqueProduto(Integer idProduto) {
+
+        return estoqueDTOConverter.from(estoqueRepository.getByIdProdutoId(idProduto));
     }
 
     public EstoqueDTO entradaNoEstoque(EntradaEstoque entradaEstoque){
