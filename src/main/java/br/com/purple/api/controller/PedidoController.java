@@ -1,9 +1,6 @@
 package br.com.purple.api.controller;
 
-import br.com.purple.api.dto.pedido.FiltroTotalPedidos;
-import br.com.purple.api.dto.pedido.FinalizaPedidoDTO;
-import br.com.purple.api.dto.pedido.PedidoDTO;
-import br.com.purple.api.dto.pedido.PedidoFinalizadoDTO;
+import br.com.purple.api.dto.pedido.*;
 import br.com.purple.api.dto.pedido.item.EntradaItemDTO;
 import br.com.purple.api.usecase.PedidoUseCase;
 import io.swagger.annotations.Api;
@@ -11,6 +8,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/pedido")
@@ -21,9 +20,15 @@ public class PedidoController {
     private PedidoUseCase pedidoUseCase;
 
     @GetMapping("/total")
-    @ApiOperation("Consulta o total de pedidos finalizados.")
+    @ApiOperation("Consulta o total de pedidos finalizados em um período de tempo.")
     public ResponseEntity<Long> totalPedidos(FiltroTotalPedidos filtro){
         return ResponseEntity.ok(pedidoUseCase.obterTotalPedidos(filtro));
+    }
+
+    @GetMapping("/total/renda")
+    @ApiOperation("Consulta a renda gerada pelas vendas em um período de tempo.")
+    public ResponseEntity<BigDecimal> totalRenda(FiltroRendaTotal filtro){
+        return ResponseEntity.ok(pedidoUseCase.obterRendaTotal(filtro));
     }
 
     @PostMapping("/novo")

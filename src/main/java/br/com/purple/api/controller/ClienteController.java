@@ -26,7 +26,7 @@ public class ClienteController {
     private ClienteUseCase clienteUseCase;
 
     @GetMapping("/total")
-    @ApiOperation("Consulta o total de pedidos finalizados.")
+    @ApiOperation("Consulta o total de clientes cadastrados.")
     public ResponseEntity<Long> totalClientes(FiltroTotalClientes filtro){
         return ResponseEntity.ok(clienteUseCase.obterTotalClientes(filtro));
     }
