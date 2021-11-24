@@ -33,8 +33,9 @@ public class TipoVestimentaController {
 
     @GetMapping("/listar")
     @ApiOperation("Retorna tipos de vestimenta de acordo com o filtro.")
-    public ResponseEntity<Page<TipoVestimentaDTO>> obterTiposVestimenta(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required = false) List<CategoriaDTO> categoriaDTO){
-        return ResponseEntity.ok(tipoVestimentaUseCase.obterTiposVestimenta(pageable, categoriaDTO));
+    public ResponseEntity<Page<TipoVestimentaDTO>> obterTiposVestimenta(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                                                                        @RequestParam(required = false) List<CategoriaDTO> categorias){
+        return ResponseEntity.ok(tipoVestimentaUseCase.obterTiposVestimenta(pageable, categorias));
     }
 
     @PostMapping("/novo")
