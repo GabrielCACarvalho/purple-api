@@ -1,7 +1,6 @@
 package br.com.purple.api.config.security.filter;
 
 import br.com.purple.api.config.security.util.JwtUtil;
-import br.com.purple.api.usecase.CredencialClienteUseCase;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -24,9 +23,6 @@ import java.util.*;
 
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
-
-    @Autowired
-    private CredencialClienteUseCase credencialClienteUseCase;
 
     @Autowired
     private JwtUtil jwtUtil;

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class CredencialClienteDTO {
+public class CredencialDTO {
     @Email
     private String usuario;
     private String senha;

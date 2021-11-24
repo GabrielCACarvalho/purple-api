@@ -1,13 +1,15 @@
 package br.com.purple.api.usecase;
 
+import br.com.purple.api.config.security.dto.AuthenticationResponseDTO;
+import br.com.purple.api.config.security.util.JwtUtil;
 import br.com.purple.api.converter.Converter;
 import br.com.purple.api.converter.cliente.credencial.CredencialCredencialDTOConverter;
 import br.com.purple.api.converter.cliente.credencial.CredencialDTOCredencialConverter;
-import br.com.purple.api.converter.cliente.credencial.role.RoleDtoRoleConverter;
 import br.com.purple.api.core.entity.model.CredencialCliente;
 import br.com.purple.api.core.entity.model.Role;
-import br.com.purple.api.dto.cliente.credencial.AlteraCredencialClienteDTO;
-import br.com.purple.api.dto.cliente.credencial.CredencialClienteDTO;
+import br.com.purple.api.dto.cliente.credencial.AlteraCredencialDTO;
+import br.com.purple.api.dto.cliente.credencial.CredencialDTO;
+import br.com.purple.api.dto.cliente.credencial.LoginClienteDTO;
 import br.com.purple.api.repositories.CredencialClienteRepository;
 import br.com.purple.api.repositories.RoleRepository;
 import br.com.purple.api.converter.cliente.credencial.role.AlteraDTORoleConverter;
@@ -20,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,19 +33,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Calendar;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class CredencialClienteUseCase implements UserDetailsService {
+public class CredencialUseCase implements UserDetailsService {
 
     @Autowired
     private CredencialClienteRepository credencialClienteRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private JwtUtil jwtUtil;
 
-    private Converter<CredencialCliente, CredencialClienteDTO> credencialCredencialDTOConverter = new CredencialCredencialDTOConverter();
-    private Converter<CredencialClienteDTO, CredencialCliente> credencialDTOCredencialConverter = new CredencialDTOCredencialConverter();
+    private Converter<CredencialCliente, CredencialDTO> credencialCredencialDTOConverter = new CredencialCredencialDTOConverter();
+    private Converter<CredencialDTO, CredencialCliente> credencialDTOCredencialConverter = new CredencialDTOCredencialConverter();
     private Converter<Role, RoleDTO> roleRoleDTOConverter = new RoleRoleDTOConverter();
     private Converter<EntradaRoleDTO, Role> entradaDTORoleConverter = new EntradaDTORoleConverter();
     private Converter<AlteraRoleDTO, Role> alteraDTORoleConverter = new AlteraDTORoleConverter();
@@ -58,10 +65,28 @@ public class CredencialClienteUseCase implements UserDetailsService {
                         .collect(Collectors.toList()));
     }
 
-    public CredencialClienteDTO criaCredencial(CredencialClienteDTO credencialClienteDTO){
-        credencialClienteDTO.setSenha(passwordEncoder().encode(credencialClienteDTO.getSenha()));
+    public AuthenticationResponseDTO autentica(LoginClienteDTO loginClienteDTO){
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginClienteDTO.getUsuario(), loginClienteDTO.getSenha());
+        Authentication auth = jwtUtil.getAuthManager().authenticate(authToken);
+
+        User user = (User) auth.getPrincipal();
+
+        String token = jwtUtil.generateToken(user);
+
+        AuthenticationResponseDTO response = new AuthenticationResponseDTO();
+
+        response.setAccessToken(token);
+        response.setExpires(jwtUtil.getExpirationDateFromToken(token));
+        response.setIssued(Calendar.getInstance());
+        response.setExpiresIn(jwtUtil.getExpiration());
+
+        return response;
+    }
+
+    public CredencialDTO criaCredencial(CredencialDTO credencialDTO){
+        credencialDTO.setSenha(passwordEncoder().encode(credencialDTO.getSenha()));
         return credencialCredencialDTOConverter.from(credencialClienteRepository
-                .save(credencialDTOCredencialConverter.from(credencialClienteDTO)));
+                .save(credencialDTOCredencialConverter.from(credencialDTO)));
     }
 
     public RoleDTO salvaRole(EntradaRoleDTO entradaRoleDTO){
@@ -88,10 +113,10 @@ public class CredencialClienteUseCase implements UserDetailsService {
         credencialCliente.getRoles().add(role);
     }
 
-    public CredencialClienteDTO alteraCredencial(AlteraCredencialClienteDTO alteraCredencialClienteDTO) {
-        CredencialCliente credencialCliente = credencialClienteRepository.findByUsuario(alteraCredencialClienteDTO.getUsuario());
+    public CredencialDTO alteraCredencial(AlteraCredencialDTO alteraCredencialDTO) {
+        CredencialCliente credencialCliente = credencialClienteRepository.findByUsuario(alteraCredencialDTO.getUsuario());
 
-        credencialCliente.setSenha(passwordEncoder().encode(alteraCredencialClienteDTO.getNovaSenha()));
+        credencialCliente.setSenha(passwordEncoder().encode(alteraCredencialDTO.getNovaSenha()));
 
         return credencialCredencialDTOConverter.from(credencialClienteRepository.save(credencialCliente));
     }

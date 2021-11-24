@@ -7,7 +7,7 @@ import br.com.purple.api.core.entity.model.Marca;
 import br.com.purple.api.core.entity.model.Produto;
 import br.com.purple.api.core.entity.model.Promocao;
 import br.com.purple.api.dto.produto.EntradaProdutoDTO;
-import br.com.purple.api.usecase.CredencialClienteUseCase;
+import br.com.purple.api.usecase.CredencialUseCase;
 
 public class EntradaDTOProdutoConverter implements Converter<EntradaProdutoDTO, Produto> {
 
@@ -17,7 +17,7 @@ public class EntradaDTOProdutoConverter implements Converter<EntradaProdutoDTO, 
 
         produto.setDescricao(entradaProdutoDTO.getDescricao());
         produto.setCor(entradaProdutoDTO.getCor());
-        produto.setPath(CredencialClienteUseCase.passwordEncoder().encode(entradaProdutoDTO.getNome()));
+        produto.setPath(CredencialUseCase.passwordEncoder().encode(entradaProdutoDTO.getNome()));
         produto.setNome(entradaProdutoDTO.getNome());
         produto.setValorUnitario(entradaProdutoDTO.getValorUnitario());
         produto.setCategoria(Categoria.valueOf(entradaProdutoDTO.getCategoria().name()));
