@@ -1,11 +1,8 @@
 package br.com.purple.api.core.entity.model;
 
-import lombok.Data;
+import br.com.purple.api.core.entity.enumerator.Categoria;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -15,8 +12,18 @@ public class TipoVestimenta implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria;
 
     public TipoVestimenta() {
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     public TipoVestimenta(Integer id) {

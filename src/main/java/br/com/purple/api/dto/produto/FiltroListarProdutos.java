@@ -1,20 +1,19 @@
 package br.com.purple.api.dto.produto;
 
-import br.com.purple.api.core.entity.enumerator.Tamanho;
-import br.com.purple.api.core.entity.enumerator.Categoria;
+import br.com.purple.api.dto.enumerator.CategoriaDTO;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class FiltroListarProdutos {
 
     private Integer idTipoVestimenta;
-    private Categoria categoria;
+    private List<CategoriaDTO> categorias;
     private Integer idMarca;
     private Integer idPromocao;
-    private String cor;
-    private Tamanho tamanho;
+    private List<String> cores;
     private BigDecimal precoMin;
     private BigDecimal precoMax;
 }

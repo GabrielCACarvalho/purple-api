@@ -1,5 +1,6 @@
 package br.com.purple.api.controller;
 
+import br.com.purple.api.dto.enumerator.CategoriaDTO;
 import br.com.purple.api.dto.tipovestimenta.AlteraTipoVestimentaDTO;
 import br.com.purple.api.dto.tipovestimenta.EntradaTipoVestimentaDTO;
 import br.com.purple.api.dto.tipovestimenta.TipoVestimentaDTO;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/tipo-vestimenta")
@@ -30,8 +33,8 @@ public class TipoVestimentaController {
 
     @GetMapping("/listar")
     @ApiOperation("Retorna tipos de vestimenta de acordo com o filtro.")
-    public ResponseEntity<Page<TipoVestimentaDTO>> obterTiposVestimenta(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
-        return ResponseEntity.ok(tipoVestimentaUseCase.obterTiposVestimenta(pageable));
+    public ResponseEntity<Page<TipoVestimentaDTO>> obterTiposVestimenta(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required = false) List<CategoriaDTO> categoriaDTO){
+        return ResponseEntity.ok(tipoVestimentaUseCase.obterTiposVestimenta(pageable, categoriaDTO));
     }
 
     @PostMapping("/novo")

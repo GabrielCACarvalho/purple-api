@@ -5,6 +5,7 @@ import br.com.purple.api.converter.produto.AlteraDTOProdutoConverter;
 import br.com.purple.api.converter.produto.EntradaDTOProdutoConverter;
 import br.com.purple.api.converter.produto.ImagemImagemDTOConverter;
 import br.com.purple.api.converter.produto.ProdutoProdutoDTOConverter;
+import br.com.purple.api.core.entity.enumerator.Categoria;
 import br.com.purple.api.core.entity.model.Imagem;
 import br.com.purple.api.core.entity.model.Produto;
 import br.com.purple.api.dto.produto.*;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -146,20 +146,21 @@ public class ProdutoUseCase {
             if(filtros.getIdTipoVestimenta() != null)
                 predicates.add(builder.equal(root.get("tipoVestimenta").get("id"), filtros.getIdTipoVestimenta()));
 
-            if (filtros.getCategoria() != null)
-                predicates.add(builder.equal(root.get("categoria"), filtros.getCategoria()));
+            if (filtros.getCategorias() != null) {
+                List<Categoria> categorias = filtros.getCategorias().stream().map(catDTO -> Categoria.valueOf(catDTO.name())).collect(Collectors.toList());
+                if (categorias.size() > 0)
+                    predicates.add(root.get("categoria").in(categorias));
+            }
 
-            if (filtros.getCor() != null)
-                predicates.add(builder.equal(root.get("cor"), filtros.getCor()));
+            if (filtros.getCores() != null)
+                if (filtros.getCores().size() > 0)
+                    predicates.add(root.get("cor").in(filtros.getCores()));
 
             if (filtros.getIdMarca() != null)
                 predicates.add(builder.equal(root.get("marca").get("id"), filtros.getIdMarca()));
 
             if (filtros.getIdPromocao() != null)
                 predicates.add(builder.equal(root.get("promocao").get("id"), filtros.getIdPromocao()));
-
-            if (filtros.getTamanho() != null)
-                predicates.add(builder.equal(root.get("tamanho"), filtros.getTamanho()));
 
             if (filtros.getPrecoMin() != null && filtros.getPrecoMax() != null)
                 predicates.add(builder.between(root.get("valorUnitario"), filtros.getPrecoMin(), filtros.getPrecoMax()));
