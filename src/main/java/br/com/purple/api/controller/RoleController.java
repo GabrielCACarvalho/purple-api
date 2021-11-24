@@ -3,7 +3,7 @@ package br.com.purple.api.controller;
 import br.com.purple.api.dto.cliente.credencial.role.AlteraRoleDTO;
 import br.com.purple.api.dto.cliente.credencial.role.EntradaRoleDTO;
 import br.com.purple.api.dto.cliente.credencial.role.RoleDTO;
-import br.com.purple.api.usecase.CredencialUseCase;
+import br.com.purple.api.core.usecase.CredencialUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

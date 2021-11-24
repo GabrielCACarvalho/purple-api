@@ -1,7 +1,7 @@
 package br.com.purple.api.controller;
 
 import br.com.purple.api.dto.produto.*;
-import br.com.purple.api.usecase.ProdutoUseCase;
+import br.com.purple.api.core.usecase.ProdutoUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,7 @@ import br.com.purple.api.dto.promocao.AlteraPromocaoDTO;
 import br.com.purple.api.dto.promocao.EntradaPromocaoDTO;
 import br.com.purple.api.dto.promocao.FiltroListarPromocoes;
 import br.com.purple.api.dto.promocao.PromocaoDTO;
-import br.com.purple.api.usecase.PromocaoUseCase;
+import br.com.purple.api.core.usecase.PromocaoUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

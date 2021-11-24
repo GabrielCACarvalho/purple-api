@@ -7,7 +7,7 @@ import br.com.purple.api.core.entity.model.Marca;
 import br.com.purple.api.core.entity.model.Produto;
 import br.com.purple.api.core.entity.model.Promocao;
 import br.com.purple.api.dto.produto.EntradaProdutoDTO;
-import br.com.purple.api.usecase.CredencialUseCase;
+import br.com.purple.api.core.usecase.CredencialUseCase;
 
 public class EntradaDTOProdutoConverter implements Converter<EntradaProdutoDTO, Produto> {
 

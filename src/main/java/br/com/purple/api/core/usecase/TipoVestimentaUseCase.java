@@ -1,4 +1,4 @@
-package br.com.purple.api.usecase;
+package br.com.purple.api.core.usecase;
 
 import br.com.purple.api.core.entity.enumerator.Categoria;
 import br.com.purple.api.core.entity.model.TipoVestimenta;

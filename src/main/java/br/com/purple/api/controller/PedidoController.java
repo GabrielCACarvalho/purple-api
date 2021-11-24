@@ -2,7 +2,7 @@ package br.com.purple.api.controller;
 
 import br.com.purple.api.dto.pedido.*;
 import br.com.purple.api.dto.pedido.item.EntradaItemDTO;
-import br.com.purple.api.usecase.PedidoUseCase;
+import br.com.purple.api.core.usecase.PedidoUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

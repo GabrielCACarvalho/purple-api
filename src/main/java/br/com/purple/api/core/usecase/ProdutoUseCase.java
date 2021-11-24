@@ -1,4 +1,4 @@
-package br.com.purple.api.usecase;
+package br.com.purple.api.core.usecase;
 
 import br.com.purple.api.converter.Converter;
 import br.com.purple.api.converter.produto.AlteraDTOProdutoConverter;

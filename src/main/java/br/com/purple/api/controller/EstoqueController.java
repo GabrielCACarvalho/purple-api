@@ -4,7 +4,7 @@ import br.com.purple.api.dto.produto.EntradaEstoque;
 import br.com.purple.api.dto.estoque.EstoqueDTO;
 import br.com.purple.api.dto.estoque.FiltroConsultaEstoque;
 import br.com.purple.api.dto.estoque.SaidaEstoque;
-import br.com.purple.api.usecase.EstoqueUseCase;
+import br.com.purple.api.core.usecase.EstoqueUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

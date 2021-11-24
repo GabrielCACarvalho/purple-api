@@ -3,7 +3,7 @@ package br.com.purple.api.controller;
 import br.com.purple.api.dto.marca.AlteraMarcaDTO;
 import br.com.purple.api.dto.marca.EntradaMarcaDTO;
 import br.com.purple.api.dto.marca.MarcaDTO;
-import br.com.purple.api.usecase.MarcaUseCase;
+import br.com.purple.api.core.usecase.MarcaUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

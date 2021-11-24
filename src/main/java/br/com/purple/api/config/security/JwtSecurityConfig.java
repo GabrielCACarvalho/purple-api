@@ -1,7 +1,7 @@
 package br.com.purple.api.config.security;
 
 import br.com.purple.api.config.security.filter.JwtAuthorizationFilter;
-import br.com.purple.api.usecase.CredencialUseCase;
+import br.com.purple.api.core.usecase.CredencialUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -4,7 +4,7 @@ import br.com.purple.api.dto.enumerator.CategoriaDTO;
 import br.com.purple.api.dto.tipovestimenta.AlteraTipoVestimentaDTO;
 import br.com.purple.api.dto.tipovestimenta.EntradaTipoVestimentaDTO;
 import br.com.purple.api.dto.tipovestimenta.TipoVestimentaDTO;
-import br.com.purple.api.usecase.TipoVestimentaUseCase;
+import br.com.purple.api.core.usecase.TipoVestimentaUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

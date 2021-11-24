@@ -1,4 +1,4 @@
-package br.com.purple.api.usecase;
+package br.com.purple.api.core.usecase;
 
 import br.com.purple.api.config.security.util.ClienteAutenticadoUtil;
 import br.com.purple.api.converter.cliente.ClienteClienteDTOConverter;

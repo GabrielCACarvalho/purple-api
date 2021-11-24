@@ -3,7 +3,7 @@ package br.com.purple.api.controller;
 import br.com.purple.api.dto.endereco.AlteraEnderecoDTO;
 import br.com.purple.api.dto.endereco.EnderecoDTO;
 import br.com.purple.api.dto.endereco.EntradaEnderecoDTO;
-import br.com.purple.api.usecase.EnderecoUseCase;
+import br.com.purple.api.core.usecase.EnderecoUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
