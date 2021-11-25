@@ -15,7 +15,7 @@ import java.io.IOException;
 @Service
 public class CEPClient {
 
-    private Converter<CEPResponse, CEPResponseDto> cepToDtoConverter = new CEPToDtoConverter();
+    private final Converter<CEPResponse, CEPResponseDto> cepToDtoConverter = new CEPToDtoConverter();
 
     public CEPResponseDto consultaCEP(String cep) {
         OkHttpClient client = new OkHttpClient();

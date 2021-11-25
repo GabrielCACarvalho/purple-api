@@ -5,20 +5,20 @@ import br.com.purple.api.config.security.util.JwtUtil;
 import br.com.purple.api.converter.Converter;
 import br.com.purple.api.converter.cliente.credencial.CredencialCredencialDTOConverter;
 import br.com.purple.api.converter.cliente.credencial.CredencialDTOCredencialConverter;
+import br.com.purple.api.converter.cliente.credencial.role.AlteraDTORoleConverter;
+import br.com.purple.api.converter.cliente.credencial.role.EntradaDTORoleConverter;
+import br.com.purple.api.converter.cliente.credencial.role.RoleRoleDTOConverter;
 import br.com.purple.api.core.entity.model.CredencialCliente;
 import br.com.purple.api.core.entity.model.Role;
 import br.com.purple.api.dto.cliente.credencial.AlteraCredencialDTO;
 import br.com.purple.api.dto.cliente.credencial.CredencialDTO;
 import br.com.purple.api.dto.cliente.credencial.LoginClienteDTO;
-import br.com.purple.api.repositories.CredencialClienteRepository;
-import br.com.purple.api.repositories.RoleRepository;
-import br.com.purple.api.converter.cliente.credencial.role.AlteraDTORoleConverter;
-import br.com.purple.api.converter.cliente.credencial.role.EntradaDTORoleConverter;
-import br.com.purple.api.converter.cliente.credencial.role.RoleRoleDTOConverter;
 import br.com.purple.api.dto.cliente.credencial.role.AlteraRoleDTO;
 import br.com.purple.api.dto.cliente.credencial.role.EntradaRoleDTO;
 import br.com.purple.api.dto.cliente.credencial.role.RoleDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.purple.api.repositories.CredencialClienteRepository;
+import br.com.purple.api.repositories.RoleRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,25 +33,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Calendar;
+import java.sql.Date;
+import java.time.Instant;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class CredencialUseCase implements UserDetailsService {
 
-    @Autowired
     private CredencialClienteRepository credencialClienteRepository;
-    @Autowired
     private RoleRepository roleRepository;
-    @Autowired
     private JwtUtil jwtUtil;
 
-    private Converter<CredencialCliente, CredencialDTO> credencialCredencialDTOConverter = new CredencialCredencialDTOConverter();
-    private Converter<CredencialDTO, CredencialCliente> credencialDTOCredencialConverter = new CredencialDTOCredencialConverter();
-    private Converter<Role, RoleDTO> roleRoleDTOConverter = new RoleRoleDTOConverter();
-    private Converter<EntradaRoleDTO, Role> entradaDTORoleConverter = new EntradaDTORoleConverter();
-    private Converter<AlteraRoleDTO, Role> alteraDTORoleConverter = new AlteraDTORoleConverter();
+    private final Converter<CredencialCliente, CredencialDTO> credencialCredencialDTOConverter = new CredencialCredencialDTOConverter();
+    private final Converter<CredencialDTO, CredencialCliente> credencialDTOCredencialConverter = new CredencialDTOCredencialConverter();
+    private final Converter<Role, RoleDTO> roleRoleDTOConverter = new RoleRoleDTOConverter();
+    private final Converter<EntradaRoleDTO, Role> entradaDTORoleConverter = new EntradaDTORoleConverter();
+    private final Converter<AlteraRoleDTO, Role> alteraDTORoleConverter = new AlteraDTORoleConverter();
 
     @Override
     public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException {
@@ -77,7 +76,7 @@ public class CredencialUseCase implements UserDetailsService {
 
         response.setAccessToken(token);
         response.setExpires(jwtUtil.getExpirationDateFromToken(token));
-        response.setIssued(Calendar.getInstance());
+        response.setIssued(Date.from(Instant.now()));
         response.setExpiresIn(jwtUtil.getExpiration());
 
         return response;

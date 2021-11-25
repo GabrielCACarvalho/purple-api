@@ -10,7 +10,7 @@ import br.com.purple.api.dto.promocao.EntradaPromocaoDTO;
 import br.com.purple.api.dto.promocao.FiltroListarPromocoes;
 import br.com.purple.api.dto.promocao.PromocaoDTO;
 import br.com.purple.api.repositories.PromocaoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -23,16 +23,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class PromocaoUseCase {
 
-    @Autowired
     private PromocaoRepository promocaoRepository;
 
-    private Converter<EntradaPromocaoDTO, Promocao> entradaDTOPromocaoConverter = new EntradaDTOPromocaoConverter();
+    private final Converter<EntradaPromocaoDTO, Promocao> entradaDTOPromocaoConverter = new EntradaDTOPromocaoConverter();
 
-    private Converter<Promocao, PromocaoDTO> promocaoPromocaoDTOConverter = new PromocaoPromocaoDTOConverter();
+    private final Converter<Promocao, PromocaoDTO> promocaoPromocaoDTOConverter = new PromocaoPromocaoDTOConverter();
 
-    private Converter<AlteraPromocaoDTO, Promocao> alteraDTOPromocaoConverter = new AlteraDTOPromocaoConverter();
+    private final Converter<AlteraPromocaoDTO, Promocao> alteraDTOPromocaoConverter = new AlteraDTOPromocaoConverter();
 
     public Page<PromocaoDTO> obterPromocoes(Pageable pageable, FiltroListarPromocoes filtros){
         return promocaoPromocaoDTOConverter.from(promocaoRepository.findAll(criarFiltrosBuscarLista(filtros), pageable));

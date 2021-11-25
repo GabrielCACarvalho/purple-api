@@ -1,16 +1,17 @@
 package br.com.purple.api.usecase;
 
-import br.com.purple.api.core.entity.enumerator.Categoria;
-import br.com.purple.api.core.entity.model.TipoVestimenta;
 import br.com.purple.api.converter.Converter;
 import br.com.purple.api.converter.tipovestimenta.AlteraDTOTipoVestimentaConverter;
 import br.com.purple.api.converter.tipovestimenta.EntradaDTOTipoVestimentaConverter;
 import br.com.purple.api.converter.tipovestimenta.TipoVestimentaTipoVestimentaDTOConverter;
-import br.com.purple.api.dto.enumerator.CategoriaDTO;
+import br.com.purple.api.core.entity.enumerator.Categoria;
+import br.com.purple.api.core.entity.model.TipoVestimenta;
 import br.com.purple.api.dto.tipovestimenta.AlteraTipoVestimentaDTO;
 import br.com.purple.api.dto.tipovestimenta.EntradaTipoVestimentaDTO;
+import br.com.purple.api.dto.tipovestimenta.FiltroTipoVestimenta;
 import br.com.purple.api.dto.tipovestimenta.TipoVestimentaDTO;
 import br.com.purple.api.repositories.TipoVestimentaRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,19 +24,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class TipoVestimentaUseCase {
 
-    @Autowired
     private TipoVestimentaRepository tipoVestimentaRepository;
 
-    private Converter<EntradaTipoVestimentaDTO, TipoVestimenta> entradaDTOTipoVestimentaConverter = new EntradaDTOTipoVestimentaConverter();
+    private final Converter<EntradaTipoVestimentaDTO, TipoVestimenta> entradaDTOTipoVestimentaConverter = new EntradaDTOTipoVestimentaConverter();
 
-    private Converter<TipoVestimenta, TipoVestimentaDTO> tipoVestimentaTipoVestimentaDTOConverter = new TipoVestimentaTipoVestimentaDTOConverter();
+    private final Converter<TipoVestimenta, TipoVestimentaDTO> tipoVestimentaTipoVestimentaDTOConverter = new TipoVestimentaTipoVestimentaDTOConverter();
 
-    private Converter<AlteraTipoVestimentaDTO, TipoVestimenta> alteraTipoVestimentaDTOTipoVestimentaConverter = new AlteraDTOTipoVestimentaConverter();
+    private final Converter<AlteraTipoVestimentaDTO, TipoVestimenta> alteraTipoVestimentaDTOTipoVestimentaConverter = new AlteraDTOTipoVestimentaConverter();
 
-    public Page<TipoVestimentaDTO> obterTiposVestimenta(Pageable pageable, List<CategoriaDTO> categoriaDTO){
-        return tipoVestimentaTipoVestimentaDTOConverter.from(tipoVestimentaRepository.findAll(criarFiltroTipoVestimenta(categoriaDTO), pageable));
+    public Page<TipoVestimentaDTO> obterTiposVestimenta(Pageable pageable, FiltroTipoVestimenta filtro){
+        return tipoVestimentaTipoVestimentaDTOConverter.from(tipoVestimentaRepository.findAll(criarFiltroTipoVestimenta(filtro), pageable));
     }
 
     public TipoVestimentaDTO criaTipoVestimenta(EntradaTipoVestimentaDTO entradaTipoVestimentaDTO){
@@ -54,12 +55,12 @@ public class TipoVestimentaUseCase {
         return tipoVestimentaTipoVestimentaDTOConverter.from(tipoVestimentaRepository.getById(idTipoVestimenta));
     }
 
-    private Specification<TipoVestimenta> criarFiltroTipoVestimenta(List<CategoriaDTO> categoriaDTO) {
+    private Specification<TipoVestimenta> criarFiltroTipoVestimenta(FiltroTipoVestimenta filtro) {
         return (root, query, builder)-> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (categoriaDTO != null){
-                List<Categoria> categorias = categoriaDTO.stream().map(catDTO -> Categoria.valueOf(catDTO.name())).collect(Collectors.toList());
+            if (filtro.getCategorias() != null){
+                List<Categoria> categorias = filtro.getCategorias().stream().map(catDTO -> Categoria.valueOf(catDTO.name())).collect(Collectors.toList());
                 if (categorias.size() > 0)
                     predicates.add(root.get("categoria").in(categorias));
             }

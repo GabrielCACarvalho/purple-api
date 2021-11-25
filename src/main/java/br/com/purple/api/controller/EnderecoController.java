@@ -6,16 +6,19 @@ import br.com.purple.api.dto.endereco.EntradaEnderecoDTO;
 import br.com.purple.api.usecase.EnderecoUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static br.com.purple.api.utils.ControllerDescription.ENDERECO_DESCRIPTION;
+import static br.com.purple.api.utils.ControllerDescription.ENDERECO_TAG;
+
 @RestController
 @RequestMapping("/endereco")
-@Api(tags = "Endereços")
+@Api(tags = ENDERECO_TAG, description = ENDERECO_DESCRIPTION)
+@AllArgsConstructor
 public class EnderecoController {
 
-    @Autowired
     private EnderecoUseCase enderecoUseCase;
 
     @PostMapping("/novo")

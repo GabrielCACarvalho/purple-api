@@ -10,8 +10,7 @@ import br.com.purple.api.dto.cliente.FiltroListarClientes;
 import br.com.purple.api.dto.cliente.FiltroTotalClientes;
 import br.com.purple.api.repositories.ClienteRepository;
 import br.com.purple.api.repositories.CredencialClienteRepository;
-import br.com.purple.api.repositories.EnderecoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -27,16 +26,13 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class ClienteUseCase {
 
-    @Autowired
     private ClienteRepository clienteRepository;
-    @Autowired
     private CredencialClienteRepository credencialClienteRepository;
-    @Autowired
-    private EnderecoRepository enderecoRepository;
 
-    private ClienteClienteDTOConverter clienteClienteDTOConverter = new ClienteClienteDTOConverter();
+    private final ClienteClienteDTOConverter clienteClienteDTOConverter = new ClienteClienteDTOConverter();
 
     public Page<ClienteDTO> obterClientes(Pageable pageable, FiltroListarClientes filtros){
         return clienteClienteDTOConverter.from(clienteRepository.findAll(criarFiltrosBuscarLista(filtros), pageable));
@@ -55,7 +51,14 @@ public class ClienteUseCase {
     }
 
     public ClienteDTO alteraCliente(AlteraClienteDTO alteraClienteDTO){
-        Cliente cliente = clienteRepository.findById(alteraClienteDTO.getId()).get();
+        Optional<Cliente> optionalCliente = clienteRepository.findById(alteraClienteDTO.getId());
+
+        Cliente cliente;
+
+        if (optionalCliente.isPresent()){
+            cliente = optionalCliente.get();
+        } else
+            throw new RuntimeException("Cliente de ID: " + alteraClienteDTO.getId() + " não encontrado.");
 
         cliente.setNome(alteraClienteDTO.getNome());
         cliente.setCpf(alteraClienteDTO.getCpf());
@@ -63,6 +66,14 @@ public class ClienteUseCase {
         cliente.setSexo(alteraClienteDTO.getSexo());
 
         return clienteClienteDTOConverter.from(clienteRepository.save(cliente));
+    }
+
+    public Cliente consultaClienteAutenticado() {
+        return clienteRepository.findByCredencialClienteUsuario(ClienteAutenticadoUtil.getUsuarioClienteAutenticado());
+    }
+
+    public Long obterTotalClientes(FiltroTotalClientes filtro) {
+        return clienteRepository.count(criarFiltroContagem(filtro));
     }
 
     private Specification<Cliente> criarFiltrosBuscarLista(FiltroListarClientes filtroListarClientes){
@@ -81,14 +92,6 @@ public class ClienteUseCase {
 
             return builder.and(predicates.toArray(new Predicate[0]));
         };
-    }
-
-    public Cliente consultaClienteAutenticado() {
-       return clienteRepository.findByCredencialClienteUsuario(ClienteAutenticadoUtil.getUsuarioClienteAutenticado());
-    }
-
-    public Long obterTotalClientes(FiltroTotalClientes filtro) {
-        return clienteRepository.count(criarFiltroContagem(filtro));
     }
 
     private Specification<Cliente> criarFiltroContagem(FiltroTotalClientes filtro) {

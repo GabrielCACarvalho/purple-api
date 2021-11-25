@@ -13,49 +13,39 @@ import br.com.purple.api.repositories.*;
 import br.com.purple.api.service.CalcPrecoPrazoClient;
 import br.com.purple.api.service.model.FiltroCalculoPrecoPrazoProduto;
 import br.com.purple.api.service.model.dto.CalculoResponseDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.Instant;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Transactional
 @Service
+@AllArgsConstructor
 public class PedidoUseCase {
 
-    @Autowired
     private PedidoRepository pedidoRepository;
-
-    @Autowired
     private ItemRepository itemRepository;
-
-    @Autowired
     private ProdutoRepository produtoRepository;
-
-    @Autowired
     private ClienteRepository clienteRepository;
-
-    @Autowired
     private EstoqueRepository estoqueRepository;
-
-    @Autowired
     private CalcPrecoPrazoClient calcPrecoPrazoClient;
 
-    private Converter<Pedido, PedidoDTO> pedidoPedidoDTOConverter = new PedidoPedidoDTOConverter();
+    private final Converter<Pedido, PedidoDTO> pedidoPedidoDTOConverter = new PedidoPedidoDTOConverter();
 
-    private Converter<Pedido, PedidoFinalizadoDTO> pedidoFinalizadoDTOConverter = new PedidoFinalizadoDTOConverter();
+    private final Converter<Pedido, PedidoFinalizadoDTO> pedidoFinalizadoDTOConverter = new PedidoFinalizadoDTOConverter();
 
     public PedidoDTO criaPedido(EntradaItemDTO entradaItemDTO) {
         if (!existePedidoAberto()){
             Pedido pedido = new Pedido();
 
             pedido.setDataCriacao(Date.from(Instant.now()));
-            pedido.setItens(Arrays.asList(criaItem(entradaItemDTO)));
+            pedido.setItens(Collections.singletonList(criaItem(entradaItemDTO)));
             pedido.setValorTotal(getValorTotalPedido(pedido.getItens()));
             pedido.setCliente(clienteRepository.findByCredencialClienteUsuario(ClienteAutenticadoUtil.getUsuarioClienteAutenticado()));
             pedido.setAberto(true);

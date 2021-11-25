@@ -11,6 +11,7 @@ import br.com.purple.api.core.entity.model.Produto;
 import br.com.purple.api.dto.produto.*;
 import br.com.purple.api.repositories.ImagemRepository;
 import br.com.purple.api.repositories.ProdutoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,21 +30,19 @@ import java.util.stream.Collectors;
 
 @Transactional
 @Service
+@AllArgsConstructor
 public class ProdutoUseCase {
 
-    @Autowired
     private ProdutoRepository produtoRepository;
-
-    @Autowired
     private ImagemRepository imagemRepository;
 
-    private Converter<EntradaProdutoDTO, Produto> entradaDTOProdutoConverter = new EntradaDTOProdutoConverter();
+    private final Converter<EntradaProdutoDTO, Produto> entradaDTOProdutoConverter = new EntradaDTOProdutoConverter();
 
-    private Converter<AlteraProdutoDTO, Produto> alteraDTOProdutoConverter = new AlteraDTOProdutoConverter();
+    private final Converter<AlteraProdutoDTO, Produto> alteraDTOProdutoConverter = new AlteraDTOProdutoConverter();
 
-    private Converter<Produto, ProdutoDTO> produtoProdutoDTOConverter = new ProdutoProdutoDTOConverter();
+    private final Converter<Produto, ProdutoDTO> produtoProdutoDTOConverter = new ProdutoProdutoDTOConverter();
 
-    private Converter<Imagem, ImagemDTO> imagemImagemDTOConverter = new ImagemImagemDTOConverter();
+    private final Converter<Imagem, ImagemDTO> imagemImagemDTOConverter = new ImagemImagemDTOConverter();
 
     public Page<ProdutoDTO> obterProdutos(Pageable pageable, FiltroListarProdutos filtros) {
         return produtoProdutoDTOConverter.from(produtoRepository.findAll(criarFiltroBuscarLista(filtros), pageable));

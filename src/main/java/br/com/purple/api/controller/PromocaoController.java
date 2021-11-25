@@ -7,7 +7,7 @@ import br.com.purple.api.dto.promocao.PromocaoDTO;
 import br.com.purple.api.usecase.PromocaoUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static br.com.purple.api.utils.ControllerDescription.PROMOCAO_DESCRIPTION;
+import static br.com.purple.api.utils.ControllerDescription.PROMOCAO_TAG;
+
 @RestController
 @RequestMapping("/promocao")
-@Api(tags = "Promoção")
+@Api(tags = PROMOCAO_TAG, description = PROMOCAO_DESCRIPTION)
+@AllArgsConstructor
 public class PromocaoController {
 
-    @Autowired
     private PromocaoUseCase promocaoUseCase;
 
     @GetMapping("/{idPromocao}")

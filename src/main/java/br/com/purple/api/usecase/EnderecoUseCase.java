@@ -10,25 +10,23 @@ import br.com.purple.api.core.entity.model.Endereco;
 import br.com.purple.api.dto.endereco.AlteraEnderecoDTO;
 import br.com.purple.api.dto.endereco.EnderecoDTO;
 import br.com.purple.api.dto.endereco.EntradaEnderecoDTO;
-import br.com.purple.api.repositories.EnderecoRepository;
 import br.com.purple.api.repositories.ClienteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.purple.api.repositories.EnderecoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class EnderecoUseCase {
 
-    @Autowired
     private EnderecoRepository enderecoRepository;
-
-    @Autowired
     private ClienteRepository clienteRepository;
 
-    private Converter<EntradaEnderecoDTO, Endereco> entradaDTOEnderecoConverter = new EntradaDTOEnderecoConverter();
+    private final Converter<EntradaEnderecoDTO, Endereco> entradaDTOEnderecoConverter = new EntradaDTOEnderecoConverter();
 
-    private Converter<Endereco, EnderecoDTO> enderecoEnderecoDTOConverter = new EnderecoEnderecoDTOConverter();
+    private final Converter<Endereco, EnderecoDTO> enderecoEnderecoDTOConverter = new EnderecoEnderecoDTOConverter();
 
-    private Converter<AlteraEnderecoDTO, Endereco> alteraDTOEnderecoConverter = new AlteraDTOEnderecoConverter();
+    private final Converter<AlteraEnderecoDTO, Endereco> alteraDTOEnderecoConverter = new AlteraDTOEnderecoConverter();
 
     public EnderecoDTO criaEndereco(EntradaEnderecoDTO entradaEnderecoDTO) {
         Endereco endereco = enderecoRepository.save(entradaDTOEnderecoConverter.from(entradaEnderecoDTO));

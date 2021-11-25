@@ -1,13 +1,13 @@
 package br.com.purple.api.controller;
 
-import br.com.purple.api.dto.enumerator.CategoriaDTO;
 import br.com.purple.api.dto.tipovestimenta.AlteraTipoVestimentaDTO;
 import br.com.purple.api.dto.tipovestimenta.EntradaTipoVestimentaDTO;
+import br.com.purple.api.dto.tipovestimenta.FiltroTipoVestimenta;
 import br.com.purple.api.dto.tipovestimenta.TipoVestimentaDTO;
 import br.com.purple.api.usecase.TipoVestimentaUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,14 +15,15 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import static br.com.purple.api.utils.ControllerDescription.TIPO_VESTIMENTA_DESCRIPTION;
+import static br.com.purple.api.utils.ControllerDescription.TIPO_VESTIMENTA_TAG;
 
 @RestController
 @RequestMapping("/tipo-vestimenta")
-@Api(tags = "Tipos de vestimentas")
+@Api(tags = TIPO_VESTIMENTA_TAG, description = TIPO_VESTIMENTA_DESCRIPTION)
+@AllArgsConstructor
 public class TipoVestimentaController {
 
-    @Autowired
     private TipoVestimentaUseCase tipoVestimentaUseCase;
 
     @GetMapping("/{idTipoVestimenta}")
@@ -34,8 +35,8 @@ public class TipoVestimentaController {
     @GetMapping("/listar")
     @ApiOperation("Retorna tipos de vestimenta de acordo com o filtro.")
     public ResponseEntity<Page<TipoVestimentaDTO>> obterTiposVestimenta(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                                                                        @RequestParam(required = false) List<CategoriaDTO> categorias){
-        return ResponseEntity.ok(tipoVestimentaUseCase.obterTiposVestimenta(pageable, categorias));
+                                                                        FiltroTipoVestimenta filtro){
+        return ResponseEntity.ok(tipoVestimentaUseCase.obterTiposVestimenta(pageable, filtro));
     }
 
     @PostMapping("/novo")

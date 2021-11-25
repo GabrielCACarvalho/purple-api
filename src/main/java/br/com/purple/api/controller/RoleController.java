@@ -6,6 +6,7 @@ import br.com.purple.api.dto.cliente.credencial.role.RoleDTO;
 import br.com.purple.api.usecase.CredencialUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,10 +18,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
+import static br.com.purple.api.utils.ControllerDescription.ROLE_DESCRIPTION;
+import static br.com.purple.api.utils.ControllerDescription.ROLE_TAG;
+
 @RestController
 @RequestMapping("/role")
-@Api(tags = "Roles")
-@RequiredArgsConstructor
+@Api(tags = ROLE_TAG, description = ROLE_DESCRIPTION)
+@AllArgsConstructor
 public class RoleController {
 
     private final CredencialUseCase credencialUseCase;

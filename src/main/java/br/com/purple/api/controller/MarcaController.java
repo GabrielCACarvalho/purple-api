@@ -6,7 +6,7 @@ import br.com.purple.api.dto.marca.MarcaDTO;
 import br.com.purple.api.usecase.MarcaUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -14,12 +14,15 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static br.com.purple.api.utils.ControllerDescription.MARCA_DESCRIPTION;
+import static br.com.purple.api.utils.ControllerDescription.MARCA_TAG;
+
 @RestController
 @RequestMapping("/marca")
-@Api(tags = "Marca")
+@Api(tags = MARCA_TAG, description = MARCA_DESCRIPTION)
+@AllArgsConstructor
 public class MarcaController {
 
-    @Autowired
     private MarcaUseCase marcaUseCase;
 
     @GetMapping("/{idMarca}")

@@ -1,13 +1,13 @@
 package br.com.purple.api.controller;
 
-import br.com.purple.api.service.CalcPrecoPrazoClient;
 import br.com.purple.api.service.CEPClient;
+import br.com.purple.api.service.CalcPrecoPrazoClient;
 import br.com.purple.api.service.model.FiltroCalculoPrecoPrazoProduto;
 import br.com.purple.api.service.model.dto.CEPResponseDto;
 import br.com.purple.api.service.model.dto.CalculoResponseDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,15 +15,16 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import static br.com.purple.api.utils.ControllerDescription.CORREIO_DESCRIPTION;
+import static br.com.purple.api.utils.ControllerDescription.CORREIO_TAG;
+
 @RestController
 @RequestMapping("/correio")
-@Api(tags = "Correios")
+@Api(tags = CORREIO_TAG, description = CORREIO_DESCRIPTION)
+@AllArgsConstructor
 public class CorreioController {
 
-    @Autowired
     private CalcPrecoPrazoClient calcClient;
-
-    @Autowired
     private CEPClient CEPClient;
 
     @PostMapping("/calcula/preco/prazo")

@@ -2,7 +2,6 @@ package br.com.purple.api.config.security.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class AuthenticationResponseDTO {
@@ -12,9 +11,9 @@ public class AuthenticationResponseDTO {
     @JsonProperty("expires_in")
     private Long expiresIn;
     @JsonProperty("issued")
-    private Calendar issued;
+    private Date issued;
     @JsonProperty("expires")
-    private Calendar expires;
+    private Date expires;
 
     public String getAccessToken() {
         return accessToken;
@@ -32,31 +31,19 @@ public class AuthenticationResponseDTO {
         this.expiresIn = expiresIn;
     }
 
-    public Calendar getIssued() {
+    public Date getIssued() {
         return issued;
     }
 
-    public void setIssued(Calendar issued) {
+    public void setIssued(Date issued) {
         this.issued = issued;
     }
 
-    public void setExpires(Calendar expires) {
-        this.expires = expires;
-    }
-
-    public void setIssued(Date issued) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(issued);
-        this.issued = calendar;
-    }
-
-    public Calendar getExpires() {
+    public Date getExpires() {
         return expires;
     }
 
     public void setExpires(Date expires) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(expires);
-        this.expires = calendar;
+        this.expires = expires;
     }
 }

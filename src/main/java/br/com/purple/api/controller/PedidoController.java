@@ -5,18 +5,21 @@ import br.com.purple.api.dto.pedido.item.EntradaItemDTO;
 import br.com.purple.api.usecase.PedidoUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
+import static br.com.purple.api.utils.ControllerDescription.PEDIDO_DESCRIPTION;
+import static br.com.purple.api.utils.ControllerDescription.PEDIDO_TAG;
+
 @RestController
 @RequestMapping("/pedido")
-@Api(tags = "Pedidos")
+@Api(tags = PEDIDO_TAG, description = PEDIDO_DESCRIPTION)
+@AllArgsConstructor
 public class PedidoController {
 
-    @Autowired
     private PedidoUseCase pedidoUseCase;
 
     @GetMapping("/total")

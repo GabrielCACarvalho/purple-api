@@ -8,6 +8,7 @@ import br.com.purple.api.dto.cliente.credencial.RoleToCredentialDTO;
 import br.com.purple.api.usecase.CredencialUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +16,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
+import static br.com.purple.api.utils.ControllerDescription.CREDENCIAL_DESCRIPTION;
+import static br.com.purple.api.utils.ControllerDescription.CREDENCIAL_TAG;
+
 @RestController
 @RequestMapping("/credencial")
-@Api(tags = "Credencial")
-@RequiredArgsConstructor
+@Api(tags = CREDENCIAL_TAG, description = CREDENCIAL_DESCRIPTION)
+@AllArgsConstructor
 public class CredencialController {
 
     private final CredencialUseCase credencialUseCase;

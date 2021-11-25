@@ -4,7 +4,7 @@ import br.com.purple.api.dto.produto.*;
 import br.com.purple.api.usecase.ProdutoUseCase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,12 +15,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static br.com.purple.api.utils.ControllerDescription.PRODUTO_DESCRIPTION;
+import static br.com.purple.api.utils.ControllerDescription.PRODUTO_TAG;
+
 @RestController
 @RequestMapping("/produto")
-@Api(tags = "Produtos")
+@Api(tags = PRODUTO_TAG, description = PRODUTO_DESCRIPTION)
+@AllArgsConstructor
 public class ProdutoController {
 
-    @Autowired
     private ProdutoUseCase produtoUseCase;
 
     @GetMapping("/listar")

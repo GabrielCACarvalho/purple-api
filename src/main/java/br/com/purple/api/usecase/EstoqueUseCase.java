@@ -1,31 +1,30 @@
 package br.com.purple.api.usecase;
 
-import br.com.purple.api.core.entity.model.EstoquePK;
-import br.com.purple.api.core.entity.model.Produto;
-import br.com.purple.api.dto.produto.EntradaEstoque;
-import br.com.purple.api.repositories.EstoqueRepository;
 import br.com.purple.api.converter.Converter;
 import br.com.purple.api.converter.estoque.EstoqueDTOConverter;
 import br.com.purple.api.core.entity.model.Estoque;
+import br.com.purple.api.core.entity.model.EstoquePK;
+import br.com.purple.api.core.entity.model.Produto;
 import br.com.purple.api.dto.estoque.EstoqueDTO;
 import br.com.purple.api.dto.estoque.FiltroConsultaEstoque;
 import br.com.purple.api.dto.estoque.SaidaEstoque;
+import br.com.purple.api.dto.produto.EntradaEstoque;
+import br.com.purple.api.repositories.EstoqueRepository;
 import br.com.purple.api.repositories.ProdutoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class EstoqueUseCase {
 
-    @Autowired
     private EstoqueRepository estoqueRepository;
-    @Autowired
     private ProdutoRepository produtoRepository;
 
-    private Converter<Estoque, EstoqueDTO> estoqueDTOConverter = new EstoqueDTOConverter();
+    private final Converter<Estoque, EstoqueDTO> estoqueDTOConverter = new EstoqueDTOConverter();
 
     public EstoqueDTO consultaEstoqueProduto(FiltroConsultaEstoque filtroConsultaEstoque) {
 
@@ -51,7 +50,7 @@ public class EstoqueUseCase {
         Estoque estoque = estoqueRepository.getByIdProdutoIdAndIdTamanho(saidaEstoque.getIdProduto(), saidaEstoque.getTamanho());
 
         if (estoque == null)
-            throw new RuntimeException("ESSE PRODUTO NAO TEM ESTOQUE"); //TODO: Fazer validação com java validation
+            throw new RuntimeException("Esse produto não tem estoque cadastrado par o tamanho " + saidaEstoque.getTamanho() + ".");
 
         estoque.setQuantidadeEmEstoque(estoque.getQuantidadeEmEstoque() - saidaEstoque.getQuantidade());
 
