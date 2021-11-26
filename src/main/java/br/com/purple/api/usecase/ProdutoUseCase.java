@@ -12,7 +12,6 @@ import br.com.purple.api.dto.produto.*;
 import br.com.purple.api.repositories.ImagemRepository;
 import br.com.purple.api.repositories.ProdutoRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -142,8 +141,9 @@ public class ProdutoUseCase {
         return (root, query, builder)->{
             List<Predicate> predicates = new ArrayList<>();
 
-            if(filtros.getIdTipoVestimenta() != null)
-                predicates.add(builder.equal(root.get("tipoVestimenta").get("id"), filtros.getIdTipoVestimenta()));
+            if(filtros.getIdsTipoVestimenta() != null)
+                if(filtros.getIdsTipoVestimenta().size() > 0)
+                    predicates.add(root.get("tipoVestimenta").get("id").in(filtros.getIdsTipoVestimenta()));
 
             if (filtros.getCategorias() != null) {
                 List<Categoria> categorias = filtros.getCategorias().stream().map(catDTO -> Categoria.valueOf(catDTO.name())).collect(Collectors.toList());

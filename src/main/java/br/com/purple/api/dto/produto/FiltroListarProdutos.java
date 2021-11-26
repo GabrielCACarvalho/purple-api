@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class FiltroListarProdutos {
 
-    private Integer idTipoVestimenta;
+    private List<Integer> idsTipoVestimenta;
     private List<CategoriaDTO> categorias;
     private Integer idMarca;
     private Integer idPromocao;
