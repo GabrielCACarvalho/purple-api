@@ -74,7 +74,7 @@ public class CredencialUseCase implements UserDetailsService {
 
         AuthenticationResponseDTO response = new AuthenticationResponseDTO();
 
-        response.setAccessToken(token);
+        response.setAccessToken("Bearer " + token);
         response.setExpires(jwtUtil.getExpirationDateFromToken(token));
         response.setIssued(Date.from(Instant.now()));
         response.setExpiresIn(jwtUtil.getExpiration());
