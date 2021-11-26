@@ -26,6 +26,12 @@ public class ProdutoController {
 
     private ProdutoUseCase produtoUseCase;
 
+    @GetMapping("/cadastrados/total")
+    @ApiOperation("Retorna o número de produtos cadastrados.")
+    public ResponseEntity<Long> obterTotalProdutosCadastrados(){
+        return ResponseEntity.ok(produtoUseCase.obterTotalProdutosCadastrados());
+    }
+
     @GetMapping("/listar")
     @ApiOperation("Retorna produtos de acordo com o filtro.")
     public ResponseEntity<Page<ProdutoDTO>> obterProdutos(FiltroListarProdutos filtros,

@@ -220,9 +220,13 @@ public class PedidoUseCase {
     }
 
     public BigDecimal obterRendaTotal(FiltroRendaTotal filtro) {
-        if (filtro.getDataInicio() != null & filtro.getDataFim() != null)
-            return BigDecimal.valueOf(pedidoRepository.selectSomatoriaValorTotalPedidos(Date.valueOf(filtro.getDataInicio()), Date.valueOf(filtro.getDataFim())));
-        else
+        if (filtro.getDataInicio() != null & filtro.getDataFim() != null) {
+            Double somatoria = pedidoRepository.selectSomatoriaValorTotalPedidos(Date.valueOf(filtro.getDataInicio()), Date.valueOf(filtro.getDataFim()));
+            if (somatoria != null)
+                return BigDecimal.valueOf(somatoria);
+            else
+                throw new RuntimeException("Não pedidos para serem contados.");
+        } else
             return BigDecimal.valueOf(pedidoRepository.selectSomatoriaValorTotalPedidos());
     }
 }

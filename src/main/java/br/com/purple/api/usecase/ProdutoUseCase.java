@@ -104,6 +104,10 @@ public class ProdutoUseCase {
         return produtoProdutoDTOConverter.from(produtoRepository.save(produto));
     }
 
+    public Long obterTotalProdutosCadastrados() {
+        return produtoRepository.count();
+    }
+
     public ProdutoDTO alteraProduto(AlteraProdutoDTO alteraProdutoDTO) {
 
         Optional<Produto> optionalProduto = produtoRepository.findById(alteraProdutoDTO.getId());
